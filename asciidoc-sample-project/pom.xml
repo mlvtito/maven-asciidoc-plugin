@@ -1,0 +1,68 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+             
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>net.rwx.asciidoc</groupId>
+    <artifactId>asciidoc-sample-project</artifactId>
+    
+    <version>1.0-SNAPSHOT</version>
+    <name>asciidoc-sample-project</name>
+    <url>http://maven.apache.org</url>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.python</groupId>
+            <artifactId>jython-standalone</artifactId>
+            <version>2.5.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>fop</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>net.rwx.asciidoc</groupId>
+                <artifactId>asciidoc-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>asciidoc</goal>
+                        </goals>
+                        <phase>site</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <documents>
+                        <document>
+                            <title>Sherpa Configuration Guide</title>
+                            <path>test.txt</path>
+                            <backend>slidy</backend>
+                        </document>
+                        
+                    </documents>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
