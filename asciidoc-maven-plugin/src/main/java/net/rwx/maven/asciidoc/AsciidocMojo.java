@@ -74,7 +74,7 @@ public class AsciidocMojo extends AbstractMojo {
             try {
                 compiler.setDocument( document );
                 compiler.execute();
-            } catch ( IOException ex ) {
+            } catch ( Exception ex ) {
                 getLog().error( "Unable to compile a document", ex );
             }
         }

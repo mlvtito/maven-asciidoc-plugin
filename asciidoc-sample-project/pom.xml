@@ -53,13 +53,20 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <defaultBackend>pdf</defaultBackend>
                     <documents>
                         <document>
                             <title>Sherpa Configuration Guide</title>
                             <path>test.txt</path>
-                            <backend>slidy</backend>
                         </document>
-                        
+                        <document>
+                            <title>Asciidoc User Guide</title>
+                            <path>asciidoc.txt</path>
+                        </document>
+                        <document>
+                            <title>Asciidoc Article Template</title>
+                            <path>article.txt</path>
+                        </document>
                     </documents>
                 </configuration>
             </plugin>

@@ -1,7 +1,10 @@
-package net.rwx.maven.asciidoc;
+package net.rwx.maven.asciidoc.backends;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -12,7 +15,7 @@ public class AsciidocBackendSingleton {
     private static AsciidocBackendSingleton instance;
     private Map<String, AsciidocBackend> map;
 
-    private AsciidocBackendSingleton() {
+    private AsciidocBackendSingleton() throws IOException {
 
         map = new HashMap<String, AsciidocBackend>();
 
@@ -22,16 +25,24 @@ public class AsciidocBackendSingleton {
         map.put( "slidy", new AsciidocBackend( "slidy", ".html" ) );
         map.put( "docbook", new AsciidocBackend( "docbook", ".xml" ) );
         
-        map.put( "chunked", new AsciidocBackend( "docbook", ".xml", ".html" ) );
-        map.put( "pdf", new AsciidocBackend( "docbook", ".xml", ".fo", ".pdf" ) );
+        map.put( "pdf", new AsciidocBackend( "docbook", ".xml", ".fo", "fo.xsl" ) );
     }
 
     public static AsciidocBackendSingleton getInstance() {
 
         if ( instance == null ) {
-            instance = new AsciidocBackendSingleton();
+            try {
+                instance = new AsciidocBackendSingleton();
+            } catch ( IOException ex ) {
+                
+            }
         }
 
         return instance;
+    }
+    
+    public AsciidocBackend getBackend( String name ) {
+        
+        return map.get( name );
     }
 }

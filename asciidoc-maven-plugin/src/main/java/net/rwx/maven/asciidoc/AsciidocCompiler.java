@@ -1,8 +1,19 @@
 package net.rwx.maven.asciidoc;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import javax.xml.transform.*;
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import net.rwx.maven.asciidoc.backends.AsciidocBackend;
+import net.rwx.maven.asciidoc.backends.AsciidocBackendSingleton;
+import net.rwx.maven.asciidoc.backends.AsciidocBackendTransformation;
+import net.rwx.maven.asciidoc.utils.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.fop.apps.FOPException;
+import org.apache.fop.apps.Fop;
+import org.apache.fop.apps.FopFactory;
+import org.apache.fop.apps.MimeConstants;
 import org.python.core.PyString;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
@@ -16,60 +27,90 @@ public class AsciidocCompiler {
     private Document document;
 
     public void setDocument( Document document ) {
-        
+
         this.document = document;
     }
-    
-    private String getAsciidocBackend() {
-        
-        String backend = document.getBackend();
-        if( backend.equals( "pdf" ) ) 
-        {
-            return "docbook";
-        }
-        
-        return backend;
-    }
-    
-    private String getAsciidocOutput() throws IOException {
-        
-        File tmpDir = File.createTempFile("temp", Long.toString(System.nanoTime()));
-        tmpDir.mkdir();
-        tmpDir.deleteOnExit();
-        
-        String output = document.getOutputPath();
-        if( document.getBackend().equals( "pdf" ) )
-        {
-            return "/tmp/tmpasciidoc";
-        }
-        
-        return output;
-    }
-    
-    private void executeAsciidoc() throws IOException {
-        
-        String backend = getAsciidocBackend();
-        String output = getAsciidocOutput();
-        
+
+    private void executeAsciidoc( String input, String backend, String output ) throws IOException {
+
         PySystemState state = new PySystemState();
         state.argv.append( new PyString( "-b" ) );
         state.argv.append( new PyString( backend ) );
-        state.argv.append( new PyString( "--out-file="+output ) );
-        
+        state.argv.append( new PyString( "--out-file=" + output ) );
+        state.argv.append( new PyString( input ) );
 
-        String path = document.getPath();
-        state.argv.append( new PyString( path ) );
-        
         PythonInterpreter interp = new PythonInterpreter( null, state );
-        
+
         ClassLoader loader = this.getClass().getClassLoader();
         InputStream is = loader.getResourceAsStream( "asciidoc/asciidoc.py" );
         interp.execfile( is );
         is.close();
     }
-    
-    public void execute() throws IOException {
+
+    private void executeTransformation( String input, String stylesheet, String output ) throws TransformerConfigurationException, TransformerException, FileNotFoundException {
+
+        File xmlFile = new File( input );
+        File xsltFile = new File( "/etc/asciidoc/docbook-xsl/fo.xsl" );
+        File resultFile = new File( output );
+
+        Source xmlSource = new StreamSource( xmlFile );
+        Source xsltSource = new StreamSource( xsltFile );
+        Result result = new StreamResult( new FileOutputStream( resultFile ) );
+
+        TransformerFactory transFact = TransformerFactory.newInstance();
+        Transformer trans = transFact.newTransformer( xsltSource );
+        trans.transform( xmlSource, result );
+    }
+
+    private void executeFop( String input, String output ) throws FileNotFoundException, FOPException, TransformerConfigurationException, TransformerException, IOException {
         
-        executeAsciidoc();
+        OutputStream out = null;
+        try {
+            FopFactory fopFactory = FopFactory.newInstance();
+
+            File outputFile = new File( output );
+            out = new BufferedOutputStream( new FileOutputStream( outputFile) );
+
+            Fop fop = fopFactory.newFop( MimeConstants.MIME_PDF, out );
+
+            TransformerFactory factory = TransformerFactory.newInstance(); 
+            Transformer transformer = factory.newTransformer(); 
+
+            File inputFile = new File( input );
+            Source src = new StreamSource( inputFile );
+            Result res = new SAXResult( fop.getDefaultHandler() );
+
+            transformer.transform( src, res );
+        } finally { 
+            out.close(); 
+        }
+    }
+    
+    public void execute() throws IOException, TransformerConfigurationException, TransformerException, FileNotFoundException, FOPException {
+
+        AsciidocBackendSingleton backends = AsciidocBackendSingleton.getInstance();
+        String backendName = document.getBackend();
+        AsciidocBackend backend = backends.getBackend( backendName );
+
+        String path = document.getPath();
+        String output = backend.getOutputFile( path );
+        executeAsciidoc( path, backend.getName(), output );
+
+        for ( AsciidocBackendTransformation transformation : backend.getTransformations() ) 
+        {
+            String input = output;
+            String stylesheet = transformation.getXsl();
+            output = transformation.getOutputFile( input );
+
+            executeTransformation( input, stylesheet, output );
+        }
+
+        if( document.getBackend().equals( "pdf" ) )
+        {
+            String input = output;
+            output = backend.getOutputFilePDF( input );
+            executeFop( input, output );
+        }
+        FileUtils.moveFileToDirectory( output, document.getOutputPath() );
     }
 }
