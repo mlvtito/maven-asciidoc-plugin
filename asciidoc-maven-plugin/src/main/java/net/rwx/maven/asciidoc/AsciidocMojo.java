@@ -55,6 +55,16 @@ public class AsciidocMojo extends AbstractMojo {
         }
     }
     
+    private AsciidocCompiler getCompiler() throws MojoExecutionException {
+        
+        try {
+            getLog().info( "Unpacking Asciidoc" );
+            return new AsciidocCompiler();
+        }catch( IOException ioe ) {
+            throw new MojoExecutionException( ioe.getMessage(), ioe);
+        }
+    }
+    
     @Override
     public void execute() throws MojoExecutionException {
         
@@ -65,7 +75,7 @@ public class AsciidocMojo extends AbstractMojo {
         getLog().info( "Default backend : " + defaultBackend );
         getLog().info( "There is  " + documents.size() + " documents to compile" );
         
-        AsciidocCompiler compiler = new AsciidocCompiler();
+        AsciidocCompiler compiler = getCompiler();
         for ( Document document : documents ) {
             
             computeDocument( document );
@@ -78,61 +88,5 @@ public class AsciidocMojo extends AbstractMojo {
                 getLog().error( "Unable to compile a document", ex );
             }
         }
-        /*
-         * PySystemState state = new PySystemState(); state.argv.append( new PyString( "-b" ) ); state.argv.append( new PyString( "docbook" ) );
-         *
-         * state.argv.append( new PyString( "/workspaces/netbeans/rwx/maven-asciidoc-plugin/test-project/test.txt" ) ); PythonInterpreter interp = new
-         * PythonInterpreter( null, state );
-         *
-         * ClassLoader loader = this.getClass().getClassLoader(); InputStream is = loader.getResourceAsStream( "asciidoc/asciidoc.py" ); InputStream isFo =
-         * loader.getResourceAsStream( "asciidoc/docbook-xsl/fo.xsl" );
-         *
-         * interp.execfile( is );
-         *
-         * File xmlFile = new File( "/workspaces/netbeans/rwx/maven-asciidoc-plugin/test-project/test.xml" ); File xsltFile = new File(
-         * "/etc/asciidoc/docbook-xsl/fo.xsl" ); File resultFile = new File( "/workspaces/netbeans/rwx/maven-asciidoc-plugin/test-project/test.fo" );
-         *
-         * Source xmlSource = new StreamSource( xmlFile ); Source xsltSource = new StreamSource( xsltFile ); Result result = null; try { result = new
-         * StreamResult( new FileOutputStream( resultFile ) ); } catch ( FileNotFoundException ex ) { Logger.getLogger( AsciidocMojo.class.getName() ).log(
-         * Level.SEVERE, null, ex ); }
-         *
-         * // create an instance of TransformerFactory TransformerFactory transFact = TransformerFactory.newInstance();
-         *
-         * Transformer trans; try { trans = transFact.newTransformer( xsltSource ); trans.transform( xmlSource, result );
-         *
-         * } catch ( TransformerConfigurationException ex ) { Logger.getLogger( AsciidocMojo.class.getName() ).log( Level.SEVERE, null, ex ); } catch (
-         * TransformerException ex ) { Logger.getLogger( AsciidocMojo.class.getName() ).log( Level.SEVERE, null, ex );
-        }
-         */
-
-
-
-
-
-        // Step 1: Construct a FopFactory
-// (reuse if you plan to render multiple documents!)
-       /*
-         * FopFactory fopFactory = FopFactory.newInstance();
-         *
-         * // Step 2: Set up output stream. // Note: Using BufferedOutputStream for performance reasons (helpful with FileOutputStreams). OutputStream out =
-         * null; try { out = new BufferedOutputStream( new FileOutputStream( new File( "/workspaces/netbeans/rwx/maven-asciidoc-plugin/test-project/test.pdf" )
-         * ) ); } catch ( FileNotFoundException ex ) { Logger.getLogger( AsciidocMojo.class.getName() ).log( Level.SEVERE, null, ex ); }
-         *
-         * try { // Step 3: Construct fop with desired output format Fop fop = fopFactory.newFop( MimeConstants.MIME_PDF, out );
-         *
-         * // Step 4: Setup JAXP using identity transformer TransformerFactory factory = TransformerFactory.newInstance(); Transformer transformer =
-         * factory.newTransformer(); // identity transformer
-         *
-         * // Step 5: Setup input and output for XSLT transformation // Setup input stream Source src = new StreamSource( new File(
-         * "/workspaces/netbeans/rwx/maven-asciidoc-plugin/test-project/test.fo" ) );
-         *
-         * // Resulting SAX events (the generated FO) must be piped through to FOP Result res = new SAXResult( fop.getDefaultHandler() );
-         *
-         * // Step 6: Start XSLT transformation and FOP processing transformer.transform( src, res );
-         *
-         * } catch( Exception ex ) { Logger.getLogger( AsciidocMojo.class.getName() ).log( Level.SEVERE, null, ex ); } finally { try { //Clean-up out.close(); }
-         * catch ( IOException ex ) { Logger.getLogger( AsciidocMojo.class.getName() ).log( Level.SEVERE, null, ex ); }
-        }
-         */
     }
 }

@@ -9,7 +9,6 @@ import net.rwx.maven.asciidoc.backends.AsciidocBackend;
 import net.rwx.maven.asciidoc.backends.AsciidocBackendSingleton;
 import net.rwx.maven.asciidoc.backends.AsciidocBackendTransformation;
 import net.rwx.maven.asciidoc.utils.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.fop.apps.FOPException;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
@@ -24,13 +23,35 @@ import org.python.util.PythonInterpreter;
  */
 public class AsciidocCompiler {
 
+    public static final String VERSION = "8.6.7";
+    
+    private String asciidocFile;
     private Document document;
 
+    public AsciidocCompiler() throws IOException {
+        
+        ClassLoader loader = this.getClass().getClassLoader();
+        InputStream is = loader.getResourceAsStream( "asciidoc.tar.gz" );
+        asciidocFile = FileUtils.uncompress( is );
+    }
     public void setDocument( Document document ) {
 
         this.document = document;
     }
 
+    private String getAsciidoc() {
+        
+        StringBuilder builder = new StringBuilder();
+        builder.append( asciidocFile );
+        builder.append( File.separator );
+        builder.append( "asciidoc-" );
+        builder.append( AsciidocCompiler.VERSION );
+        builder.append( File.separator );
+        builder.append( "asciidoc.py" );
+        
+        return builder.toString();
+    }
+    
     private void executeAsciidoc( String input, String backend, String output ) throws IOException {
 
         PySystemState state = new PySystemState();
@@ -41,10 +62,7 @@ public class AsciidocCompiler {
 
         PythonInterpreter interp = new PythonInterpreter( null, state );
 
-        ClassLoader loader = this.getClass().getClassLoader();
-        InputStream is = loader.getResourceAsStream( "asciidoc/asciidoc.py" );
-        interp.execfile( is );
-        is.close();
+        interp.execfile( getAsciidoc() );
     }
 
     private void executeTransformation( String input, String stylesheet, String output ) throws TransformerConfigurationException, TransformerException, FileNotFoundException {
@@ -111,6 +129,7 @@ public class AsciidocCompiler {
             output = backend.getOutputFilePDF( input );
             executeFop( input, output );
         }
+        
         FileUtils.moveFileToDirectory( output, document.getOutputPath() );
     }
 }

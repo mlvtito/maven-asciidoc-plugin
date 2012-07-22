@@ -1,7 +1,9 @@
 package net.rwx.maven.asciidoc.utils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
 /**
  *
@@ -47,5 +49,40 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         }
         
         moveFileToDirectory( file, directory, true );
+    }
+    
+    public static String getTemporayAsciidoc( ) throws IOException {
+        
+        return File.createTempFile("temp", Long.toString(System.nanoTime())).getName();
+
+    }
+    public static String uncompress( InputStream is ) throws IOException {
+        
+        BufferedInputStream in = new BufferedInputStream( is );
+        GzipCompressorInputStream gzIn = new GzipCompressorInputStream(in);
+        TarArchiveInputStream tarInput = new TarArchiveInputStream( gzIn );
+        
+        String tempDir = FileUtils.getTemporayAsciidoc();
+        
+        TarArchiveEntry entry = tarInput.getNextTarEntry();
+        do {
+            File f = new File( tempDir + "/" + entry.getName() );
+            FileUtils.forceMkdir( f.getParentFile() );
+            
+            OutputStream os = new FileOutputStream( f );
+            byte[] content = new byte[ (int)entry.getSize() ];
+            int byteRead = 0;
+            while( byteRead < entry.getSize() ) {
+                byteRead += tarInput.read(content, byteRead, content.length - byteRead);
+                os.write( content, 0, byteRead );
+            }
+            
+            os.close();
+            entry = tarInput.getNextTarEntry();
+        }while( entry != null );
+
+        gzIn.close();
+        
+        return tempDir;
     }
 }
