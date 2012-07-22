@@ -55,6 +55,9 @@ public class AsciidocCompiler {
     private void executeAsciidoc( String input, String backend, String output ) throws IOException {
 
         PySystemState state = new PySystemState();
+        
+        state.argv.clear();
+        state.argv.append( new PyString( getAsciidoc() ) );
         state.argv.append( new PyString( "-b" ) );
         state.argv.append( new PyString( backend ) );
         state.argv.append( new PyString( "--out-file=" + output ) );
