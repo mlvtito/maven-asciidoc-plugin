@@ -52,6 +52,20 @@ public class AsciidocCompiler {
         return builder.toString();
     }
     
+    private String getXsl( String name ) {
+        
+        StringBuilder builder = new StringBuilder();
+        builder.append( asciidocFile );
+        builder.append( File.separator );
+        builder.append( "asciidoc-" );
+        builder.append( AsciidocCompiler.VERSION );
+        builder.append( File.separator );
+        builder.append( "docbook-xsl" );
+        builder.append( File.separator );
+        builder.append( name );
+        
+        return builder.toString();
+    }
     private void executeAsciidoc( String input, String backend, String output ) throws IOException {
 
         PySystemState state = new PySystemState();
@@ -71,7 +85,7 @@ public class AsciidocCompiler {
     private void executeTransformation( String input, String stylesheet, String output ) throws TransformerConfigurationException, TransformerException, FileNotFoundException {
 
         File xmlFile = new File( input );
-        File xsltFile = new File( "/etc/asciidoc/docbook-xsl/fo.xsl" );
+        File xsltFile = new File( getXsl(stylesheet) );
         File resultFile = new File( output );
 
         Source xmlSource = new StreamSource( xmlFile );
