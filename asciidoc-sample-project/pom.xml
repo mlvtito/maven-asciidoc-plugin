@@ -56,10 +56,6 @@
                     <defaultBackend>pdf</defaultBackend>
                     <documents>
                         <document>
-                            <title>Test Guide</title>
-                            <path>test.txt</path>
-                        </document>
-                        <document>
                             <title>Asciidoc Article Template</title>
                             <path>article.txt</path>
                         </document>
