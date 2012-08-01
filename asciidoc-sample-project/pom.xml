@@ -54,11 +54,16 @@
                 </executions>
                 <configuration>
                     <defaultBackend>pdf</defaultBackend>
+		    <defaultDocumentType>book</defaultDocumentType>
                     <documents>
                         <document>
                             <title>Asciidoc Article Template</title>
                             <path>article.txt</path>
                         </document>
+                        <!-- document>
+                            <title>Asciidoc User's Guide</title>
+                            <path>asciidoc.txt</path>
+                        </document -->
                     </documents>
                 </configuration>
             </plugin>

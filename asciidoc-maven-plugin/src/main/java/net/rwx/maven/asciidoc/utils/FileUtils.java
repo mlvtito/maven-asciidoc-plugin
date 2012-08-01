@@ -53,36 +53,41 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     
     public static String getTemporayAsciidoc( ) throws IOException {
         
-        return File.createTempFile("temp", Long.toString(System.nanoTime())).getName();
+        
+        File f = File.createTempFile("tempAsciidoc", Long.toString(System.nanoTime()));
+        // forceMkdir( f );
+        // forceDeleteOnExit( f );
+        return f.getName();
 
     }
-    public static String uncompress( InputStream is ) throws IOException {
+    
+    public static String uncompress( InputStream is, String destination ) throws IOException {
         
         BufferedInputStream in = new BufferedInputStream( is );
         GzipCompressorInputStream gzIn = new GzipCompressorInputStream(in);
         TarArchiveInputStream tarInput = new TarArchiveInputStream( gzIn );
         
-        String tempDir = FileUtils.getTemporayAsciidoc();
-        
         TarArchiveEntry entry = tarInput.getNextTarEntry();
         do {
-            File f = new File( tempDir + "/" + entry.getName() );
+            File f = new File( destination + "/" + entry.getName() );
             FileUtils.forceMkdir( f.getParentFile() );
             
-            OutputStream os = new FileOutputStream( f );
-            byte[] content = new byte[ (int)entry.getSize() ];
-            int byteRead = 0;
-            while( byteRead < entry.getSize() ) {
-                byteRead += tarInput.read(content, byteRead, content.length - byteRead);
-                os.write( content, 0, byteRead );
+            if( ! f.isDirectory() ) {
+                OutputStream os = new FileOutputStream( f );
+                byte[] content = new byte[ (int)entry.getSize() ];
+                int byteRead = 0;
+                while( byteRead < entry.getSize() ) {
+                    byteRead += tarInput.read(content, byteRead, content.length - byteRead);
+                    os.write( content, 0, byteRead );
+                }
+
+                os.close();
             }
-            
-            os.close();
             entry = tarInput.getNextTarEntry();
         }while( entry != null );
 
         gzIn.close();
         
-        return tempDir;
+        return destination;
     }
 }

@@ -23,7 +23,7 @@ public class AsciidocBackendSingleton {
         map.put( "slidy", new AsciidocBackend( "slidy", ".html" ) );
         map.put( "docbook", new AsciidocBackend( "docbook", ".xml" ) );
         
-        map.put( "pdf", new AsciidocBackend( "docbook", ".xml", ".fo", "fo.xsl" ) );
+        map.put( "pdf", new AsciidocBackend( "docbook", ".xml", ".fo", "fo/docbook.xsl" ) );
     }
 
     public static AsciidocBackendSingleton getInstance() {

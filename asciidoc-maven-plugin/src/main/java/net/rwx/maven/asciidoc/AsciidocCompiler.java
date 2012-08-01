@@ -1,7 +1,14 @@
 package net.rwx.maven.asciidoc;
 
 import java.io.*;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -13,9 +20,10 @@ import org.apache.fop.apps.FOPException;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
-import org.python.core.PyString;
-import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -31,8 +39,15 @@ public class AsciidocCompiler {
     public AsciidocCompiler() throws IOException {
         
         ClassLoader loader = this.getClass().getClassLoader();
+        
         InputStream is = loader.getResourceAsStream( "asciidoc.tar.gz" );
-        asciidocFile = FileUtils.uncompress( is );
+        asciidocFile = FileUtils.getTemporayAsciidoc();
+        FileUtils.uncompress( is, asciidocFile );
+        
+        String xslDocbook = getBaseXsl( "" );
+        is = loader.getResourceAsStream( "docbook-xsl.tar.gz" );
+        FileUtils.uncompress( is, xslDocbook );
+        
     }
     public void setDocument( Document document ) {
 
@@ -52,7 +67,7 @@ public class AsciidocCompiler {
         return builder.toString();
     }
     
-    private String getXsl( String name ) {
+    private String getBaseXsl( String name ) {
         
         StringBuilder builder = new StringBuilder();
         builder.append( asciidocFile );
@@ -66,9 +81,20 @@ public class AsciidocCompiler {
         
         return builder.toString();
     }
+    
+    private String getXsl( String name ) {
+    
+        StringBuilder builder = new StringBuilder();
+        builder.append( getBaseXsl( "docbook-xsl" ) );
+        builder.append( File.separator );
+        builder.append( name );
+        
+        return builder.toString();
+    }
+    
     private void executeAsciidoc( String input, String backend, String output ) throws IOException {
 
-        PySystemState state = new PySystemState();
+        /*PySystemState state = new PySystemState();
         
         state.argv.clear();
         state.argv.append( new PyString( getAsciidoc() ) );
@@ -76,25 +102,30 @@ public class AsciidocCompiler {
         state.argv.append( new PyString( backend ) );
         state.argv.append( new PyString( "--out-file=" + output ) );
         state.argv.append( new PyString( input ) );
-
-        PythonInterpreter interp = new PythonInterpreter( null, state );
-
+*/
+        String[] argv = { getAsciidoc(), "-b", backend, "--out-file=" + output, input };
+        PythonInterpreter.initialize( null, null, argv );
+        PythonInterpreter interp = new PythonInterpreter();
         interp.execfile( getAsciidoc() );
     }
 
     private void executeTransformation( String input, String stylesheet, String output ) throws TransformerConfigurationException, TransformerException, FileNotFoundException {
+        try {
+            File xmlFile = new File( input );
+            File xsltFile = new File( getXsl(stylesheet) );
+            File resultFile = new File( output );
 
-        File xmlFile = new File( input );
-        File xsltFile = new File( getXsl(stylesheet) );
-        File resultFile = new File( output );
+            Source xmlSource = new StreamSource( xmlFile );
+            Source xsltSource = new StreamSource( xsltFile );
+            Result result = new StreamResult( new BufferedOutputStream( new FileOutputStream( resultFile ) ) );
 
-        Source xmlSource = new StreamSource( xmlFile );
-        Source xsltSource = new StreamSource( xsltFile );
-        Result result = new StreamResult( new FileOutputStream( resultFile ) );
-
-        TransformerFactory transFact = TransformerFactory.newInstance();
-        Transformer trans = transFact.newTransformer( xsltSource );
-        trans.transform( xmlSource, result );
+            TransformerFactory transFact = TransformerFactory.newInstance();
+            Transformer trans = transFact.newTransformer( xsltSource );
+            trans.setParameter( "paper.type", "A4" );
+            trans.transform( xmlSource, result );
+        } catch ( IOException ex ) {
+            Logger.getLogger( AsciidocCompiler.class.getName() ).log( Level.SEVERE, null, ex );
+        }
     }
 
     private void executeFop( String input, String output ) throws FileNotFoundException, FOPException, TransformerConfigurationException, TransformerException, IOException {
@@ -129,6 +160,7 @@ public class AsciidocCompiler {
 
         String path = document.getPath();
         String output = backend.getOutputFile( path );
+        //System.out.println( "executeAsciidoc - START - " + Calendar.getInstance().getTimeInMillis() );
         executeAsciidoc( path, backend.getName(), output );
 
         for ( AsciidocBackendTransformation transformation : backend.getTransformations() ) 
@@ -144,6 +176,7 @@ public class AsciidocCompiler {
         {
             String input = output;
             output = backend.getOutputFilePDF( input );
+            
             executeFop( input, output );
         }
         
