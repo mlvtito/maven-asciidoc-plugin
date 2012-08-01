@@ -7,7 +7,7 @@ import org.apache.commons.io.FilenameUtils;
 
 /**
  *
- * @author Arnaud Fonce <a.fonce@ideotechnologies.com>
+ * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
  */
 public class AsciidocBackendTransformation {
 

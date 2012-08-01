@@ -7,7 +7,7 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 
 /**
  *
- * @author Arnaud Fonce <a.fonce@ideotechnologies.com>
+ * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
  */
 public class FileUtils extends org.apache.commons.io.FileUtils {
 
