@@ -122,6 +122,9 @@ public class AsciidocCompiler {
             TransformerFactory transFact = TransformerFactory.newInstance();
             Transformer trans = transFact.newTransformer( xsltSource );
             trans.setParameter( "paper.type", "A4" );
+            // trans.setParameter( "fop.extensions", "1" ); Not working yet
+            /*trans.setParameter( "page.margin.inner", "0in" ); // left & right margin
+            trans.setParameter( "page.margin.outer", "0in" );*/
             trans.transform( xmlSource, result );
         } catch ( IOException ex ) {
             Logger.getLogger( AsciidocCompiler.class.getName() ).log( Level.SEVERE, null, ex );
