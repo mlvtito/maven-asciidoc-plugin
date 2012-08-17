@@ -68,6 +68,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             builder.append( getTempDirectoryPath() );
             builder.append( File.separator );
             builder.append( "asciidoc-maven-plugin" );
+            builder.append( Long.toString(System.nanoTime()) );
             temporaryDirectory = new File( builder.toString() );
             forceMkdir( temporaryDirectory );
             forceDeleteOnExit( temporaryDirectory );
