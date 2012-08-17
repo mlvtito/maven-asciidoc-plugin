@@ -1,0 +1,56 @@
+#macro ( menuItem $item )
+  #if ( $item.items && $item.items.size() > 0 )
+    #foreach( $subItem in $item.items )
+      <li>$subItem.name</li>
+    #end
+  #end
+#end
+
+#macro ( mainMenu $menus )
+  #foreach( $menu in $menus )
+    #if ( $menu.items && $menu.items.size() > 0 )
+    <ul>
+      #foreach( $item in $menu.items )
+        #menuItem( $item )
+      #end
+    </ul>
+    #end
+  #end
+#end
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/site.css" />
+	<script type="text/javascript" language="javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" language="javascript" src="js/rwx.js"></script>
+</head>
+<body>
+    <div id="toolbar">
+        <ul class="left">
+            #mainMenu( $decoration.body.menus )
+	</ul>
+    </div>
+
+
+	<div id="header">
+		<h1>Envima</h1>
+		<h2>Commands scheduler</h2>
+	</div>
+
+	<div id="menu">
+		<ul>
+			<li class="actionAdd">Add a server</li>
+		</ul>
+	</div>
+
+	<div id="content"> 
+		<div class="article">
+			<div id="server-list"></div>
+		</div>
+	</div>
+
+	<div id="footer"> Footer </div>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+body {
+	margin: 0px;
+	border-width: 0px;
+	background-color: #000000;
+}
+
+#toolbar {
+	background-color: #283c54;
+	width: 100%;
+	padding: 0;
+	border: 0;
+}
+
+#toolbar ul {
+	display:inline-block;
+	border: 0;
+	padding: 0;
+	margin: 0; 
+	list-style: none;
+}
+#toolbar ul.left {
+	padding-left: 15%;
+	width: 50%
+}
+
+#toolbar ul.right {
+	text-align: right;
+	padding-right: 14%;
+	width: 15%;
+}
+
+#toolbar ul li {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 0.7em;
+	display:inline-block;
+	padding-left: 1%;
+	padding-right: 1%;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	text-align: right;
+	color: #efefef;
+}
+
+#toolbar ul li:hover {
+	background-color: #544028;
+	cursor: pointer;
+}
+
+#header {
+	border-width: 0px;
+	margin: 0px;
+	padding: 0px;
+	background-color: #000000;
+	/*background-image: -moz-linear-gradient(bottom, #507aaa 0%, #283c54 100%);*/
+}
+
+#header h1 {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 1.4em;
+	color: white;
+	margin-left: 20%;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom-width: 0px;
+	margin-top: 0px;
+	padding-top: 0.5%;
+}
+
+#header h2 {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 0.7em;
+	color: #ab8150;
+	margin-left: 20%;
+	margin-top: 0;
+	padding-top: 0;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+}
+
+#menu {
+	font-family: "Verdana, Geneva, sans-serif";
+	margin: 0px;
+	padding: 0px;
+	background-color: #283c54;
+	padding-right: 15%;
+	text-align: right;
+	color: #ffffff;
+}
+
+#menu ul {
+	display:inline-block;
+	border: 0; 
+	padding: 0;
+	margin: 0; 
+	list-style: none;
+	width: 70%;
+}
+
+#menu ul li {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 0.7em;
+	display:inline-block;
+	padding: 0px;
+	padding-left: 1%;
+	padding-right: 1%;
+	margin: 0px;
+}
+
+#menu ul li:hover {
+	background-color: #544028;
+	cursor: pointer;
+}
+
+#menu ul li.selected {
+	background-color: #efefef;
+	font-weight: bold;
+}
+
+#menu ul li.actionAdd {
+	background-image: url('actionAdd.png');
+	background-repeat: no-repeat;
+	background-position: center left;
+	background-size: contain;
+	padding-left: 2%;
+}
+
+#content {
+	padding-top: 0px;
+	margin-top: 0px;
+	background-image: -moz-linear-gradient(top, #283c54 0%, #000000 20%);
+	border: 0px;
+}
+
+.article {
+	width: 70%;
+	height: 200px;
+	margin: auto;
+	margin-top: 0px;
+	border-top: 0px;
+	padding-top: 1%;
+	background-color: #efefef;
+}
+
+.article h1 {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-style: italic;
+	font-size: 1.8em;
+	color: #507aaa;
+	border: 0px;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-color: black;
+	margin: 0px;
+	padding: 0px;
+	padding-top: 5px;
+	padding-left: 20%;
+}
+
+.article p {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 0.7em;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 0px;
+	margin-top: 0px;
+}
+
+.article table {
+	width: 80%;
+	padding: 0px;
+	border: 0px;
+	border-spacing: 0px;
+	border-collapse: collapse; 
+	margin: auto;
+	clear: both;
+}
+
+.article table thead {
+	background-color: #544028;
+	color: #ffffff;
+}
+
+.article table thead tr th {
+	padding-top: 0.1%;
+	padding-bottom: 0.1%;
+}
+
+div.server-list-item {
+	border-width: 1px;
+	border-style: dashed;
+	width: 60%;
+	margin-left: 2%;
+	padding-left: 0%;
+	background-color: #ffffff;
+}
+
+div.server-list-item h1 {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-style: italic;
+	font-size: 1.0em;
+	color: #000000;
+	border: 0px;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-color: black;
+	margin: 0px;
+	padding: 0px;
+	text-align: right;
+	padding-top: 2px;
+	padding-right: 15%;
+}
+
+div.server-list-item p {
+	display: inline-block;
+	margin-bottom: 0px;
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: lightgrey;
+	padding-left: 5%;
+	background-repeat: no-repeat;
+	background-position: 5% 50%;
+	background-size: contain;
+}
+
+div.server-list-item p.address{
+	background-image: url('serverAddress.png');
+	border-left-width: 0px;
+}
+
+div.server-list-item p.ubuntu {
+	background-image: url('ubuntu.png');
+}
+
+div.server-list-item p.command {
+	background-image: url('serverCommand.png');
+}
+
+div.server-list-item p span.title {
+	font-weight: bold;
+}
