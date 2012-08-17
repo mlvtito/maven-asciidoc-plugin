@@ -37,17 +37,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         
         StringBuilder builder = new StringBuilder();
         
-        builder.append( getTempDirectoryPath() );
-        builder.append( File.separator );
-        builder.append( "asciidoc-maven-plugin" );
-        
-        if( temporaryDirectory == null )
-        {
-            temporaryDirectory = new File( builder.toString() );
-            forceMkdir( temporaryDirectory );
-            forceDeleteOnExit( temporaryDirectory );
-        }
-        
+        builder.append( getTemporayAsciidoc() );
         builder.append( File.separator );
         builder.append( file.getName() );
         builder.append( extension );
@@ -70,12 +60,22 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     }
     
     public static String getTemporayAsciidoc( ) throws IOException {
+
+        if( temporaryDirectory == null )
+        {
+            StringBuilder builder = new StringBuilder();
         
-        
-        File f = File.createTempFile("tempAsciidoc", Long.toString(System.nanoTime()));
+            builder.append( getTempDirectoryPath() );
+            builder.append( File.separator );
+            builder.append( "asciidoc-maven-plugin" );
+            temporaryDirectory = new File( builder.toString() );
+            forceMkdir( temporaryDirectory );
+            forceDeleteOnExit( temporaryDirectory );
+        }
+        // File f = File.createTempFile("tempAsciidoc", Long.toString(System.nanoTime()));
         // forceMkdir( f );
         // forceDeleteOnExit( f );
-        return f.getName();
+        return temporaryDirectory.getAbsolutePath();
 
     }
     
@@ -100,6 +100,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                 }
 
                 os.close();
+                forceDeleteOnExit( f );
             }
             entry = tarInput.getNextTarEntry();
         }while( entry != null );
