@@ -148,6 +148,9 @@ public class AsciidocCompiler {
             FopFactory fopFactory = FopFactory.newInstance();
 
             File outputFile = new File( output );
+            if( outputFile.exists() ) {
+                FileUtils.forceDelete( outputFile );
+            }
             out = new BufferedOutputStream( new FileOutputStream( outputFile) );
 
             Fop fop = fopFactory.newFop( MimeConstants.MIME_PDF, out );

@@ -50,10 +50,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         File file = new File( fileName );
         File directory = new File( directoryName );
         
-        File destFile = FileUtils.getFile( directory, fileName );
-        if ( destFile.exists() )
-        {
-            destFile.delete();
+        File destFile = FileUtils.getFile( directory, file.getName() );
+        if ( destFile.exists() ) {
+            forceDelete( destFile );
         }
         
         moveFileToDirectory( file, directory, true );
