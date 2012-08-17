@@ -36,7 +36,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * Goal to compile Asciidoc documents.
- *
+ * 
+ * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
+ * 
  * @goal asciidoc
  */
 public class AsciidocMojo extends AbstractMojo {
