@@ -1,4 +1,21 @@
+<!--
+This file is part of "Maven Asciidoc Plugin".
 
+"Maven Asciidoc Plugin" is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+"Maven Asciidoc Plugin" is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Foobar.  If not, see <http://www.gnu.org/licenses/>
+
+Copyright 2012 Arnaud Fonce <arnaud.fonce@r-w-x.net>
+ -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
              
@@ -11,6 +28,12 @@
     <name>asciidoc-sample-project</name>
     <url>http://maven.apache.org</url>
     
+    <parent>
+        <groupId>net.rwx.asciidoc</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
