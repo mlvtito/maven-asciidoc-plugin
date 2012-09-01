@@ -7,15 +7,27 @@
 #end
 
 #macro ( mainMenu $menus )
-  #foreach( $menu in $menus )
-    #if ( $menu.items && $menu.items.size() > 0 )
-    <ul>
-      #foreach( $item in $menu.items )
-        #menuItem( $item )
-      #end
-    </ul>
+    #foreach( $menu in $menus )
+        #foreach( $item in $menu.items )
+            #set ( $currentItemHref = $PathTool.calculateLink( $item.href, $relativePath ) )
+            #set ( $currentItemHref = $currentItemHref.replaceAll( "\\", "/" ) )
+            <li><a href="$currentItemHref">$item.name</a></li>
+        #end
     #end
-  #end
+#end
+
+#macro ( subMenu $menus )
+    #foreach( $menu in $menus )
+        #foreach( $item in $menu.items )
+            #if ( $item.collapse == true )
+                #foreach( $subItem in $item.items )
+                    #set ( $currentItemHref = $PathTool.calculateLink( $subItem.href, $relativePath ) )
+                    #set ( $currentItemHref = $currentItemHref.replaceAll( "\\", "/" ) )
+                    <li><a href="$currentItemHref">$subItem.name</a></li>
+                #end
+            #end
+        #end
+    #end
 #end
 
 <html>
@@ -34,19 +46,19 @@
 
 
 	<div id="header">
-		<h1>Envima</h1>
-		<h2>Commands scheduler</h2>
+		<h1>$decoration.bannerLeft.name</h1>
+		<h2>$decoration.bannerRight</h2>
 	</div>
 
 	<div id="menu">
 		<ul>
-			<li class="actionAdd">Add a server</li>
+			#subMenu( $decoration.body.menus )
 		</ul>
 	</div>
 
 	<div id="content"> 
 		<div class="article">
-			<div id="server-list"></div>
+                      $bodyContent
 		</div>
 	</div>
 

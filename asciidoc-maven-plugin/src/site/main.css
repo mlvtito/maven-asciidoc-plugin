@@ -242,3 +242,9 @@ div.server-list-item p.command {
 div.server-list-item p span.title {
 	font-weight: bold;
 }
+
+.section h2 {
+	background-color: #ffffff;
+	color: #283c54;
+}
+

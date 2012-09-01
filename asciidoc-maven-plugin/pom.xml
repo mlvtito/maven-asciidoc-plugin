@@ -25,7 +25,7 @@ Copyright 2012 Arnaud Fonce <arnaud.fonce@r-w-x.net>
     <artifactId>asciidoc-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>asciidoc-maven-plugin</name>
+    <name>Maven Asciidoc Plugin</name>
     <url>http://maven.apache.org</url>
     
     <parent>

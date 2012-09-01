@@ -41,6 +41,11 @@ body {
 	color: #efefef;
 }
 
+#toolbar ul li a {
+    color: #efefef;
+    text-decoration: none;
+}
+
 #toolbar ul li:hover {
 	background-color: #544028;
 	cursor: pointer;
@@ -87,6 +92,7 @@ body {
 	padding: 0px;
 	background-color: #283c54;
 	padding-right: 15%;
+        padding-left: 15%;
 	text-align: right;
 	color: #ffffff;
 }
@@ -97,7 +103,7 @@ body {
 	padding: 0;
 	margin: 0; 
 	list-style: none;
-	width: 70%;
+	/*width: 70%;*/
 }
 
 #menu ul li {
@@ -108,6 +114,11 @@ body {
 	padding-left: 1%;
 	padding-right: 1%;
 	margin: 0px;
+}
+
+#menu ul li a {
+    color: #efefef;
+    text-decoration: none;
 }
 
 #menu ul li:hover {
@@ -131,17 +142,18 @@ body {
 #content {
 	padding-top: 0px;
 	margin-top: 0px;
-	background-image: -moz-linear-gradient(top, #283c54 0%, #000000 20%);
+	background-image: -moz-linear-gradient(top, #283c54 0%, #000000 80px);
 	border: 0px;
 }
 
 .article {
 	width: 70%;
-	height: 200px;
+	min-height: 200px;
 	margin: auto;
 	margin-top: 0px;
 	border-top: 0px;
 	padding-top: 1%;
+	padding-bottom: 1%;
 	background-color: #efefef;
 }
 
@@ -189,56 +201,49 @@ body {
 	padding-bottom: 0.1%;
 }
 
-div.server-list-item {
-	border-width: 1px;
-	border-style: dashed;
-	width: 60%;
-	margin-left: 2%;
-	padding-left: 0%;
-	background-color: #ffffff;
-}
-
-div.server-list-item h1 {
+.section h2 {
 	font-family: Verdana,Arial,Helvetica,sans-serif;
-	font-style: italic;
-	font-size: 1.0em;
-	color: #000000;
-	border: 0px;
-	border-bottom-style: solid;
-	border-bottom-width: 1px;
-	border-color: black;
-	margin: 0px;
-	padding: 0px;
+	background-color: #283c54;
+	color: #ffffff;
+	margin-left: 1%;
+	margin-right: 1%;
+	padding-right: 10%;
 	text-align: right;
-	padding-top: 2px;
-	padding-right: 15%;
 }
 
-div.server-list-item p {
+.section h3 {
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	background-color: #283c54;
+	color: #ab8150;
+	margin-left: 1%;
+	margin-right: 1%;
+	padding-right: 10%;
+	text-align: right;
+}
+
+.source {
 	display: inline-block;
-	margin-bottom: 0px;
-	border-left-width: 1px;
-	border-left-style: solid;
-	border-left-color: lightgrey;
-	padding-left: 5%;
-	background-repeat: no-repeat;
-	background-position: 5% 50%;
-	background-size: contain;
+	margin: auto;
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
 }
 
-div.server-list-item p.address{
-	background-image: url('serverAddress.png');
-	border-left-width: 0px;
+table.bodyTable {
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-size: 0.7em;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
 }
 
-div.server-list-item p.ubuntu {
-	background-image: url('ubuntu.png');
+table.bodyTable tr th {
+    background-color: lightgrey;
 }
 
-div.server-list-item p.command {
-	background-image: url('serverCommand.png');
-}
-
-div.server-list-item p span.title {
-	font-weight: bold;
+table.bodyTable tr td {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    padding-left: 3%;
 }

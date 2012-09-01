@@ -28,7 +28,7 @@ public class Document {
     /** Document title. */
     private String title;
     
-    /** Docuement source path. */
+    /** Document source path. */
     private String path;
     
     /** Document type. Sould be article or book. */
