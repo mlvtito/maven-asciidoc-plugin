@@ -108,13 +108,16 @@ public class AsciidocCompiler {
 
         PySystemState state = new PySystemState();
         
+        File fInput = new File( input );
+        state.setCurrentWorkingDir( fInput.getParent() );
+        
         state.argv.clear();
         state.argv.append( new PyString( getAsciidoc() ) );
         state.argv.append( new PyString( "-b" ) );
         state.argv.append( new PyString( backend ) );
         state.argv.append( new PyString( "--out-file=" + output ) );
         state.argv.append( new PyString( input ) );
-
+        
         PythonInterpreter interp = new PythonInterpreter( null, state );
         interp.execfile( getAsciidoc() );
     }
