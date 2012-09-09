@@ -18,6 +18,7 @@
  */
 package net.rwx.maven.asciidoc;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import org.apache.maven.plugin.AbstractMojo;
@@ -45,6 +46,10 @@ public class AsciidocMojo extends AbstractMojo {
      */
     private String defaultBackend;
     /**
+     * @parameter default-value="${project.file}"
+     */
+    private File projectFile;
+    /**
      * @parameter
      */
     private List<Document> documents;
@@ -62,6 +67,9 @@ public class AsciidocMojo extends AbstractMojo {
         if ( document.getOutputPath() == null ) {
             document.setOutputPath( defaultOutputPath );
         }
+        
+        String realPath = projectFile.getParent() + File.separator + document.getPath();
+        document.setPath( realPath );
     }
     
     private AsciidocCompiler getCompiler() throws MojoExecutionException {
@@ -82,6 +90,13 @@ public class AsciidocMojo extends AbstractMojo {
         getLog().info( "Default document type : " + defaultDocumentType );
         getLog().info( "Default output path : " + defaultOutputPath );
         getLog().info( "Default backend : " + defaultBackend );
+        getLog().info( "Project file : " + projectFile );
+        
+        if( documents == null ) {
+            getLog().info( "Nothing to be done" );
+            return;
+        }
+        
         getLog().info( "There is  " + documents.size() + " documents to compile" );
         
         AsciidocCompiler compiler = getCompiler();
