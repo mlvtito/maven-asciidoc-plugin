@@ -108,9 +108,6 @@ public class AsciidocCompiler {
 
         PySystemState state = new PySystemState();
         
-        File fInput = new File( input );
-        state.setCurrentWorkingDir( fInput.getParent() );
-        
         state.argv.clear();
         state.argv.append( new PyString( getAsciidoc() ) );
         state.argv.append( new PyString( "-b" ) );
@@ -118,7 +115,14 @@ public class AsciidocCompiler {
         state.argv.append( new PyString( "--out-file=" + output ) );
         state.argv.append( new PyString( input ) );
         
+        File fInput = new File( input );
+        state.setCurrentWorkingDir( fInput.getParent() );
+        
         PythonInterpreter interp = new PythonInterpreter( null, state );
+        interp.setOut( System.out );
+        interp.exec( "import os" );
+        interp.exec( "os.chdir('" + fInput.getParent() + "')" );
+        interp.exec( "os.getcwd()" );
         interp.execfile( getAsciidoc() );
     }
 
@@ -135,6 +139,9 @@ public class AsciidocCompiler {
             TransformerFactory transFact = TransformerFactory.newInstance();
             Transformer trans = transFact.newTransformer( xsltSource );
             trans.setParameter( "paper.type", "A4" );
+            
+            String imgDir = new File( this.document.getPath() ).getParentFile().getAbsolutePath();
+            trans.setParameter( "img.src.path", imgDir + "/" );
             // trans.setParameter( "fop.extensions", "1" ); Not working yet
             /*trans.setParameter( "page.margin.inner", "0in" ); // left & right margin
             trans.setParameter( "page.margin.outer", "0in" );*/
@@ -148,6 +155,7 @@ public class AsciidocCompiler {
         
         OutputStream out = null;
         try {
+            
             FopFactory fopFactory = FopFactory.newInstance();
 
             File outputFile = new File( output );
@@ -162,6 +170,7 @@ public class AsciidocCompiler {
             Transformer transformer = factory.newTransformer(); 
 
             File inputFile = new File( input );
+            FileUtils.copyFileToDirectory( inputFile, new File("/tmp") );
             Source src = new StreamSource( inputFile );
             Result res = new SAXResult( fop.getDefaultHandler() );
 
