@@ -34,23 +34,33 @@ import org.apache.maven.plugin.MojoExecutionException;
 public class AsciidocMojo extends AbstractMojo {
 
     /**
+     * Default document type which apply on each document.
      * @parameter default-value="article"
+     * @since 0.1
      */
     private String defaultDocumentType;
     /**
+     * Default target path for generated documents.
      * @parameter default-value="${project.build.directory}/asciidoc"
+     * @since 0.1
      */
     private String defaultOutputPath;
     /**
+     * Default backend which apply on each document.
      * @parameter default-value="html5"
+     * @since 0.1
      */
     private String defaultBackend;
     /**
      * @parameter default-value="${project.file}"
+     * @readonly
      */
     private File projectFile;
+    
     /**
+     * The documents list to generate.
      * @parameter
+     * @since 0.1
      */
     private List<Document> documents;
     

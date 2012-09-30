@@ -19,25 +19,42 @@
 package net.rwx.maven.asciidoc;
 
 /**
- * A configuration bean for this Maven mojo.
+ * A configuration bean to describe a document to generate.
  * 
  * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
  */
 public class Document {
 
-    /** Document title. */
+    /** 
+     * Document title. 
+     * @parameter
+     */
     private String title;
     
-    /** Document source path. */
+    /** 
+     * Document source path. 
+     * @parameter
+     */
     private String path;
     
-    /** Document type. Sould be article or book. */
+    /** 
+     * Document type. 
+     * Sould be article or book. 
+     * @parameter
+     */
     private String documentType;
     
-    /** Document backend. Should be one of backend defined in AsciidocBackendSingleton. */
+    /** 
+     * Document backend. 
+     * Should be one of backend defined in AsciidocBackendSingleton. 
+     * @parameter
+     */
     private String backend;
     
-    /** Output path for the generated document. */
+    /** 
+     * Output path for the generated document. 
+     * @parameter
+     */
     private String outputPath;
 
     public String getBackend() {
