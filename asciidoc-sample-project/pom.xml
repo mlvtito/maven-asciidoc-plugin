@@ -52,7 +52,7 @@ Copyright 2012 Arnaud Fonce <arnaud.fonce@r-w-x.net>
                     </execution>
                 </executions>
                 <configuration>
-                    <defaultBackend>pdf</defaultBackend>
+                    <defaultBackend>html5</defaultBackend>
 		    <defaultDocumentType>book</defaultDocumentType>
                     <documents>
                         <document>

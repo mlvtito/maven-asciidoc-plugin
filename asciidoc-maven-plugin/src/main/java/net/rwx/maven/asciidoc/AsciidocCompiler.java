@@ -112,6 +112,8 @@ public class AsciidocCompiler {
         state.argv.append( new PyString( getAsciidoc() ) );
         state.argv.append( new PyString( "-b" ) );
         state.argv.append( new PyString( backend ) );
+        state.argv.append( new PyString( "-a" ) );
+        state.argv.append( new PyString( "icons" ) );
         state.argv.append( new PyString( "--out-file=" + output ) );
         state.argv.append( new PyString( input ) );
         
