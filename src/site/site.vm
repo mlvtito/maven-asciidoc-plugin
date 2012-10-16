@@ -12,6 +12,9 @@
                 #set ( $itemHref = $itemHref.replaceAll( "\\", "/" ) )
                 #if ( $itemHref == $alignedFileName )
                     #set ( $currentMenuName = $item.name )
+                    #if ( $shortTitle == "" )
+                        #set ( $shortTitle = $item.name )
+                    #end
                 #end
             #end
         #end
@@ -58,6 +61,8 @@
     $formatedDate
 #end
 
+
+#set ( $currentMenuName = "" )
 <html>
 <head>
 	<title>$decoration.bannerLeft.name</title>
