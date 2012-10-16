@@ -1,0 +1,16 @@
+
+  This plug-in allows you to generate documnetation with various file format using
+Asciidoc source file.
+
+Goals overview
+
+  Asciidoc plug-in has one goal :
+
+      * {{{./asciidoc-mojo.html}asciidoc:asciidoc}} : Generate document compiling Asciidoc source files.
+
+Usage
+
+  General instructions on how to use the Asciidoc Plugin can be found on the 
+  {{{./usage.html}usage page}}.
+
+  Information on Asciidoc format can be found on {{{http://www.methods.co.nz/asciidoc/userguide.html}Asciidoc user's guide}}.
