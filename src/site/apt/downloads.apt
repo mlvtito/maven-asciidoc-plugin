@@ -1,0 +1,25 @@
+Binary release
+
+  Download the Asciidoc Maven Plugin binary release 
+{{{http://maven.r-w-x.net/releases/net/rwx/asciidoc/asciidoc-maven-plugin/0.1/asciidoc-maven-plugin-0.1.jar}asciidoc-maven-plugin-0.1.jar}}
+
+  The binary release can be manually installed using this command :
+
++----------------------------------------
+mvn install:install-file 
+    -Dfile=path/to/mly/asciidoc-maven-plugin-0.1.jar \
+    -DgroupId=jnet.rwx.asciidoc -DartifactId=asciidoc-maven-plugin 
+    -Dversion=0.1 -Dpackaging=jar
++----------------------------------------
+
+Source
+
+  Download the Asciidoc Maven Plugin sources
+{{{http://maven.r-w-x.net/releases/net/rwx/asciidoc/asciidoc-maven-plugin/0.1/asciidoc-maven-plugin-0.1-sources.jar}asciidoc-maven-plugin-0.1-sources.jar}}
+
+  This source package contains a slightly modified Asciidoc package and a Docbook 
+XSL package.
+
+  Original Asciidoc package can be found at {{{http://sourceforge.net/projects/asciidoc/files/asciidoc/8.6.7/asciidoc-8.6.7.tar.gz/download}asciidoc-8.6.7.tar.gz}}
+
+  Original Docbook XSL can be found at {{{http://sourceforge.net/projects/docbook/files/docbook-xsl/1.77.1/docbook-xsl-1.77.1.zip/download}docbook-xsl-1.77.1.zip}}
