@@ -91,7 +91,24 @@
 		</ul>
 	</div>
 
+        
+
 	<div id="content"> 
+<div id="ads">
+<div id="googlead">
+   <script type="text/javascript"><!--
+google_ad_client = "ca-pub-5516240908858544";
+/* mvn-asciidoc- */
+google_ad_slot = "4486637488";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+        </div>
 		<div class="article">
                       $bodyContent
 		</div>
