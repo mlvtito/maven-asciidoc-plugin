@@ -19,7 +19,7 @@ body {
     list-style: none;
 }
 #toolbar ul.left {
-    padding-left: 15%;
+    padding-left: 17%;
     width: 35%
 }
 
@@ -37,14 +37,14 @@ body {
     font-family: Verdana,Arial,Helvetica,sans-serif;
     font-size: 0.7em;
     text-align: right;
-    color: #787878;
+    color: #ababab;
     padding-top: 0.2%;
 }
 
 #toolbar div.right {
     float: right;
-    padding-right: 15%;
-    width: 25%;
+    padding-right: 13%;
+    width: 35%;
 }
 
 #toolbar ul li {
@@ -117,7 +117,7 @@ body {
     padding: 0px;
     border: 0px;
     background-color: #283c54;
-    padding-right: 15%;
+    padding-right: 13%;
     padding-left: 15%;
     text-align: right;
     color: #ffffff;
@@ -181,10 +181,11 @@ body {
     margin: 0;
     /*margin: auto;*/
     margin-top: 0px;
-    margin-left: 17%;
+    /*margin-left: 17%;*/
+    left:17%;
     border-top: 0px;
-    /*padding-top: 1%;
-    padding-bottom: 1%;*/
+    padding-top: 1%;
+    padding-bottom: 1%;
     background-color: #efefef;
 }
 
@@ -307,10 +308,16 @@ div.section div:not(.section) {
     margin-bottom: 1%;
 }
 
+#adcontainer {
+    float: left;
+    width: 17%;
+}
+
 #googlead {
-    position: absolute;
-    top: 17%;
-    left: 2%;
+    position: relative;
+    margin: auto;
+    margin-top: 5%;
     width: 160px;
     height: 600px;
+    background-color: gray;
 }
