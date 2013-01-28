@@ -12,9 +12,7 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with Foobar.  If not, see <http://www.gnu.org/licenses/>
- * 
- * Copyright 2012 Arnaud Fonce <arnaud.fonce@r-w-x.net>
+ * along with Maven Asciidoc Plugin.  If not, see <http://www.gnu.org/licenses/>
  */
 package net.rwx.maven.asciidoc;
 
