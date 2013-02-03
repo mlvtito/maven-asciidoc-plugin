@@ -118,12 +118,14 @@ public class AsciidocCompiler {
         File fInput = new File( input );
         state.setCurrentWorkingDir( fInput.getParent() );
         
+        String asciidocProgram = getAsciidoc();
         PythonInterpreter interp = new PythonInterpreter( null, state );
+        interp.set("__file__", new File(asciidocProgram).getAbsolutePath());
         interp.setOut( System.out );
         interp.exec( "import os" );
         interp.exec( "os.chdir('" + fInput.getParent() + "')" );
         interp.exec( "os.getcwd()" );
-        interp.execfile( getAsciidoc() );
+        interp.execfile( asciidocProgram );
     }
 
     private void executeTransformation( String input, String stylesheet, String output ) throws TransformerConfigurationException, TransformerException, FileNotFoundException {
