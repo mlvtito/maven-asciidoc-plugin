@@ -16,10 +16,17 @@
  */
 package net.rwx.maven.asciidoc.services;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+
 /**
  *
  * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
  */
-public class TransformationService {
+public interface TransformationService extends RootService {
+    static final String ARCHIVE_NAME = "docbook-xsl.tar.gz";
     
+    void execute( String input, String stylesheet, String output, String documentPath ) throws TransformerConfigurationException, TransformerException, FileNotFoundException, IOException;
 }

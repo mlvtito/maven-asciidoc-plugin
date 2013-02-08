@@ -56,6 +56,20 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         moveFileToDirectory( file, directory, true );
     }
     
+    public static String getTemporaryDirectory() throws IOException {
+        StringBuilder builder = new StringBuilder();
+        
+        builder.append( getTempDirectoryPath() );
+        builder.append( File.separator );
+        builder.append( "asciidoc-maven-plugin" );
+        builder.append( Long.toString(System.nanoTime()) );
+        
+        File directory = new File( builder.toString() );
+        // forceMkdir( directory );
+        // forceDeleteOnExit( directory );
+        
+        return directory.getAbsolutePath();
+    }
     public static String getTemporayAsciidoc( ) throws IOException {
 
         if( temporaryDirectory == null )

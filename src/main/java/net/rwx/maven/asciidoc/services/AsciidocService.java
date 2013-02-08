@@ -16,10 +16,27 @@
  */
 package net.rwx.maven.asciidoc.services;
 
+import org.apache.maven.plugin.logging.Log;
+
 /**
- *
+ * This service handle Asciidoc transformation.
+ * 
  * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
  */
-public class AsciidocService {
+public interface AsciidocService extends RootService {
     
+    /** Asciidoc version in use by the plugin. */
+    static final String VERSION = "8.6.7";
+    
+    /** Asciidoc archive name. */
+    static final String ARCHIVE_NAME = "asciidoc-" + VERSION + ".tar.gz";
+    
+    /**
+     * Launch Asciidoc script.
+     * 
+     * @param input Path to Asciidoc document to process
+     * @param backend Determine output format for Asciidoc script
+     * @param output Path to output file (file format should match backend)
+     */
+    void execute( String input, String backend, String output );
 }

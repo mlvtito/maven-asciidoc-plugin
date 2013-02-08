@@ -16,10 +16,16 @@
  */
 package net.rwx.maven.asciidoc.services;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import org.apache.fop.apps.FOPException;
+
 /**
  *
  * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
  */
-public class FopService {
-    
+public interface FopService extends RootService {
+    void execute( String input, String output ) throws FileNotFoundException, FOPException, TransformerConfigurationException, TransformerException, IOException;
 }

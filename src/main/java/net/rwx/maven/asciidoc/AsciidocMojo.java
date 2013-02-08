@@ -16,9 +16,12 @@
  */
 package net.rwx.maven.asciidoc;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
+import net.rwx.maven.asciidoc.services.ServiceOrchestrator;
+import net.rwx.maven.asciidoc.services.modules.AsciidocModule;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -62,6 +65,29 @@ public class AsciidocMojo extends AbstractMojo {
      */
     private List<Document> documents;
     
+    @Override
+    public void execute() throws MojoExecutionException {
+
+        getLog().info( "Starting asciidoc compilation" );
+        getLog().info( "Default document type : " + defaultDocumentType );
+        getLog().info( "Default output path : " + defaultOutputPath );
+        getLog().info( "Default backend : " + defaultBackend );
+        
+        if( documents == null ) {
+            getLog().info( "Nothing to be done" );
+            return;
+        }
+
+        ServiceOrchestrator orchestrator = getServiceOrchestrator();
+        orchestrator.setLogger( getLog() );
+        
+        for ( Document document : documents ) {
+            
+            computeDocument( document );
+            orchestrator.execute( document );
+        }
+    }
+    
     private void computeDocument( Document document ) {
         
         if ( document.getBackend() == null ) {
@@ -80,45 +106,8 @@ public class AsciidocMojo extends AbstractMojo {
         document.setPath( realPath );
     }
     
-    private AsciidocCompiler getCompiler() throws MojoExecutionException {
-        
-        try {
-            getLog().info( "Unpacking Asciidoc" );
-            return new AsciidocCompiler();
-        }catch( IOException ioe ) {
-            throw new MojoExecutionException( ioe.getMessage(), ioe);
-        }
-    }
-    
-    @Override
-    public void execute() throws MojoExecutionException {
-        
-        
-        getLog().info( "Starting asciidoc compilation" );
-        getLog().info( "Default document type : " + defaultDocumentType );
-        getLog().info( "Default output path : " + defaultOutputPath );
-        getLog().info( "Default backend : " + defaultBackend );
-        getLog().info( "Project file : " + projectFile );
-        
-        if( documents == null ) {
-            getLog().info( "Nothing to be done" );
-            return;
-        }
-        
-        getLog().info( "There is  " + documents.size() + " documents to compile" );
-        
-        AsciidocCompiler compiler = getCompiler();
-        for ( Document document : documents ) {
-            
-            computeDocument( document );
-            getLog().info( "Starting compilation of " + document );
-            
-            try {
-                compiler.setDocument( document );
-                compiler.execute();
-            } catch ( Exception ex ) {
-                getLog().error( "Unable to compile a document", ex );
-            }
-        }
+    private ServiceOrchestrator getServiceOrchestrator() throws MojoExecutionException {
+        Injector injector = Guice.createInjector( new AsciidocModule() );
+        return injector.getInstance( ServiceOrchestrator.class );
     }
 }

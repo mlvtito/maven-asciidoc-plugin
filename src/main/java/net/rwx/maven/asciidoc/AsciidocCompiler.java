@@ -16,6 +16,7 @@
  */
 package net.rwx.maven.asciidoc;
 
+import com.google.inject.Inject;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +27,7 @@ import javax.xml.transform.stream.StreamSource;
 import net.rwx.maven.asciidoc.backends.AsciidocBackend;
 import net.rwx.maven.asciidoc.backends.AsciidocBackendSingleton;
 import net.rwx.maven.asciidoc.backends.AsciidocBackendTransformation;
+import net.rwx.maven.asciidoc.services.AsciidocService;
 import net.rwx.maven.asciidoc.utils.FileUtils;
 import org.apache.fop.apps.FOPException;
 import org.apache.fop.apps.Fop;
@@ -41,6 +43,9 @@ import org.python.util.PythonInterpreter;
  */
 public class AsciidocCompiler {
 
+    @Inject
+    private AsciidocService asciidocService;
+    
     public static final String VERSION = "8.6.7";
     
     private String asciidocFile;
