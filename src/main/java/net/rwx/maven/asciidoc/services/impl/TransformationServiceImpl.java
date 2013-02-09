@@ -18,7 +18,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import net.rwx.maven.asciidoc.AsciidocCompiler;
 import net.rwx.maven.asciidoc.services.TransformationService;
 import net.rwx.maven.asciidoc.utils.FileUtils;
 

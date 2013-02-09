@@ -65,7 +65,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         builder.append( Long.toString(System.nanoTime()) );
         
         File directory = new File( builder.toString() );
-        // forceMkdir( directory );
+        forceMkdir( directory );
         // forceDeleteOnExit( directory );
         
         return directory.getAbsolutePath();

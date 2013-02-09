@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<?asciidoc-toc?>
+<?asciidoc-numbered?>
+
+<article lang="en">
+<articleinfo>
+    <title>Simple Document</title>
+    <author>
+        <firstname>Arnaud</firstname>
+        <surname>Fonce</surname>
+        <email>arnaud.fonce@r-w-x.net</email>
+    </author>
+    <authorinitials>AF</authorinitials>
+</articleinfo>
+<simpara>This is a simple document.</simpara>
+<section id="_introduction">
+<title>Introduction</title>
+<simpara>This the simple introduction into simple document.</simpara>
+</section>
+</article>
