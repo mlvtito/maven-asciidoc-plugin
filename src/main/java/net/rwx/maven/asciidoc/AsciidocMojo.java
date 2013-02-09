@@ -16,6 +16,7 @@
  */
 package net.rwx.maven.asciidoc;
 
+import net.rwx.maven.asciidoc.configuration.Document;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.io.File;
@@ -82,25 +83,20 @@ public class AsciidocMojo extends AbstractMojo {
         orchestrator.setLogger( getLog() );
         
         for ( Document document : documents ) {
-            
             computeDocument( document );
             orchestrator.execute( document );
         }
     }
     
+    private String determineValue( String inputValue, String defaultValue ) {
+        return (inputValue == null)?defaultValue:inputValue;
+    }
+    
     private void computeDocument( Document document ) {
         
-        if ( document.getBackend() == null ) {
-            document.setBackend( defaultBackend );
-        }
-        
-        if ( document.getDocumentType() == null ) {
-            document.setDocumentType( defaultDocumentType );
-        }
-        
-        if ( document.getOutputPath() == null ) {
-            document.setOutputPath( defaultOutputPath );
-        }
+        document.setBackend( determineValue( document.getBackend(), defaultBackend) );
+        document.setDocumentType( determineValue( document.getDocumentType(), defaultDocumentType ) );
+        document.setOutputPath( determineValue( document.getOutputPath(), defaultOutputPath ) );
         
         String realPath = projectFile.getParent() + File.separator + document.getPath();
         document.setPath( realPath );

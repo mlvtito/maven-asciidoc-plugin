@@ -16,6 +16,7 @@
  */
 package net.rwx.maven.asciidoc;
 
+import net.rwx.maven.asciidoc.configuration.Document;
 import com.google.inject.Inject;
 import java.io.*;
 import java.util.logging.Level;

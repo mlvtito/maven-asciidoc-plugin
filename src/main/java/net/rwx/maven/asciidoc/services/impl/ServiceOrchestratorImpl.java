@@ -6,7 +6,7 @@ package net.rwx.maven.asciidoc.services.impl;
 
 import com.google.inject.Inject;
 import java.io.IOException;
-import net.rwx.maven.asciidoc.Document;
+import net.rwx.maven.asciidoc.configuration.Document;
 import net.rwx.maven.asciidoc.backends.AsciidocBackend;
 import net.rwx.maven.asciidoc.backends.AsciidocBackendSingleton;
 import net.rwx.maven.asciidoc.backends.AsciidocBackendTransformation;

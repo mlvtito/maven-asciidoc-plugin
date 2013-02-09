@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Maven Asciidoc Plugin.  If not, see <http://www.gnu.org/licenses/>
  */
-package net.rwx.maven.asciidoc;
+package net.rwx.maven.asciidoc.configuration;
 
 /**
  * A configuration bean to describe a document to generate.

@@ -4,7 +4,7 @@
  */
 package net.rwx.maven.asciidoc.services;
 
-import net.rwx.maven.asciidoc.Document;
+import net.rwx.maven.asciidoc.configuration.Document;
 import org.apache.maven.plugin.logging.Log;
 
 /**
