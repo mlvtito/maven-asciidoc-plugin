@@ -31,7 +31,10 @@ along with Maven Asciidoc Plugin  If not, see <http://www.gnu.org/licenses />
         see http://www.methods.co.nz/asciidoc/. This version uses Asciidoc
         8.6.7
     </description>
-    
+    <ciManagement>
+        <system>hudson</system>
+        <url>http://backend.r-w-x.net/ci/job/Maven%20Asciidoc%20Plugin/</url>
+    </ciManagement>
     <organization>
         <name>Room Work eXperience</name>
         <!-- url>http://www.example.com</url -->
