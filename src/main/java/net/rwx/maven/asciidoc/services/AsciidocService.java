@@ -16,8 +16,6 @@
  */
 package net.rwx.maven.asciidoc.services;
 
-import org.apache.maven.plugin.logging.Log;
-
 /**
  * This service handle Asciidoc transformation.
  * 
