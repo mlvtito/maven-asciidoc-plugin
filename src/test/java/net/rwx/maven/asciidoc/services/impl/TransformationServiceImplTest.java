@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import static org.junit.Assert.*;
 import net.rwx.maven.asciidoc.utils.FileUtils;
@@ -43,10 +44,22 @@ public class TransformationServiceImplTest {
         assertEquals( HTML_OUTPUT, FileUtils.readFileToString( new File( output ) ) );
     }
     
-    @Test(expected= TransformerException.class)
+    @Test(expected = TransformerException.class)
     public void testExecuteNoInputFile() throws IOException, TransformerException {
         TransformationServiceImpl instance = new TransformationServiceImpl();
         instance.execute( documentPath + File.separator + "fake.xml", "html/docbook.xsl", output, documentPath );
+    }
+    
+    @Test(expected = TransformerConfigurationException.class)
+    public void textExecuteNoXsl() throws IOException, TransformerException {
+        TransformationServiceImpl instance = new TransformationServiceImpl();
+        instance.execute( input, "fake/docbook.xsl", output, documentPath );
+    }
+    
+    @Test(expected = FileNotFoundException.class)
+    public void testExecuteNoOutput() throws Exception {
+        TransformationServiceImpl instance = new TransformationServiceImpl();
+        instance.execute( input, "html/docbook.xsl", "/fake/output", documentPath );
     }
     
     private void writeFileFromResource( String resourceName, String fileName ) throws IOException {
