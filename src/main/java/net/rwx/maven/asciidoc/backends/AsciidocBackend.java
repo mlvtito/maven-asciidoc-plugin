@@ -89,7 +89,10 @@ public class AsciidocBackend {
     }
 
     public void setTransformations( AsciidocBackendTransformation[] transformations ) {
-        this.transformations = transformations;
+        this.transformations = new AsciidocBackendTransformation[ transformations.length];
+        for( int i=0; i < transformations.length; i++ ) {
+            this.transformations[i] = transformations[i];
+        }
     }
 
     public String getName() {
