@@ -1,0 +1,18 @@
+Simple Asciidoc Article
+-----------------------
+
+This is an introduction
+
+First Part
+~~~~~~~~~~
+
+This is the first part.
+
+Second Part
+~~~~~~~~~~~
+
+This is the second part.
+
+
+
+Thank you for reading me

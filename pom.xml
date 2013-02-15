@@ -1,21 +1,21 @@
 <!--
-This file is part of "Maven Asciidoc Plugin".
+Copyright (C) 2013 Room Work eXperience
 
-"Maven Asciidoc Plugin" is free software: you can redistribute it and/or modify
+This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-"Maven Asciidoc Plugin" is distributed in the hope that it will be useful,
+This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Maven Asciidoc Plugin  If not, see <http://www.gnu.org/licenses />
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-             
+  
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>net.rwx.asciidoc</groupId>
@@ -84,6 +84,7 @@ along with Maven Asciidoc Plugin  If not, see <http://www.gnu.org/licenses />
         <jar.plugin.version>2.3.1</jar.plugin.version>
         <compiler-plugin-version>2.3.2</compiler-plugin-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netbeans.hint.license>gpl30</netbeans.hint.license>
     </properties>
     
     <build>

@@ -93,7 +93,6 @@ public class AsciidocMojo extends AbstractMojo {
     }
     
     private void computeDocument( Document document ) {
-        
         document.setBackend( determineValue( document.getBackend(), defaultBackend) );
         document.setDocumentType( determineValue( document.getDocumentType(), defaultDocumentType ) );
         document.setOutputPath( determineValue( document.getOutputPath(), defaultOutputPath ) );
@@ -106,4 +105,46 @@ public class AsciidocMojo extends AbstractMojo {
         Injector injector = Guice.createInjector( new AsciidocModule() );
         return injector.getInstance( ServiceOrchestrator.class );
     }
+
+    public String getDefaultDocumentType() {
+        return defaultDocumentType;
+    }
+
+    public void setDefaultDocumentType(String defaultDocumentType) {
+        this.defaultDocumentType = defaultDocumentType;
+    }
+
+    public String getDefaultOutputPath() {
+        return defaultOutputPath;
+    }
+
+    public void setDefaultOutputPath(String defaultOutputPath) {
+        this.defaultOutputPath = defaultOutputPath;
+    }
+
+    public String getDefaultBackend() {
+        return defaultBackend;
+    }
+
+    public void setDefaultBackend(String defaultBackend) {
+        this.defaultBackend = defaultBackend;
+    }
+
+    public File getProjectFile() {
+        return projectFile;
+    }
+
+    public void setProjectFile(File projectFile) {
+        this.projectFile = projectFile;
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+    
+    
 }
