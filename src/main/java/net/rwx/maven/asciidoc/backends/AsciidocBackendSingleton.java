@@ -26,6 +26,18 @@ import java.util.Map;
  */
 public class AsciidocBackendSingleton {
 
+    public static final String BACKEND_HTML    = "html5";
+    public static final String BACKEND_XHTML   = "xhtml11";
+    public static final String BACKEND_HTML4   = "html4";
+    public static final String BACKEND_SLIDY   = "slidy";
+    public static final String BACKEND_DOCBOOK = "docbook";
+    public static final String BACKEND_PDF     = "pdf";
+    
+    public static final String EXTENSION_HTML = ".html";
+    public static final String EXTENSION_XML  = ".xml";
+    public static final String EXTENSION_PDF  = ".pdf";
+    public static final String EXTENSION_FO   = ".fo";
+    
     private static AsciidocBackendSingleton instance;
     private Map<String, AsciidocBackend> map;
 
@@ -33,13 +45,15 @@ public class AsciidocBackendSingleton {
 
         map = new HashMap<String, AsciidocBackend>();
 
-        map.put( "html5", new AsciidocBackend( "html5", ".html" ) );
-        map.put( "xhtml11", new AsciidocBackend( "xhtml11", ".html" ) );
-        map.put( "html4", new AsciidocBackend( "html4", ".html" ) );
-        map.put( "slidy", new AsciidocBackend( "slidy", ".html" ) );
-        map.put( "docbook", new AsciidocBackend( "docbook", ".xml" ) );
+        // only asciidoc compilation
+        map.put( BACKEND_HTML,  new AsciidocBackend( BACKEND_HTML,    EXTENSION_HTML ) );
+        map.put( BACKEND_XHTML, new AsciidocBackend( BACKEND_XHTML,   EXTENSION_HTML ) );
+        map.put( BACKEND_HTML4, new AsciidocBackend( BACKEND_HTML4,   EXTENSION_HTML ) );
+        map.put( BACKEND_SLIDY, new AsciidocBackend( BACKEND_SLIDY,   EXTENSION_HTML ) );
+        map.put( BACKEND_PDF,   new AsciidocBackend( BACKEND_DOCBOOK, EXTENSION_XML ) );
         
-        map.put( "pdf", new AsciidocBackend( "docbook", ".xml", ".fo", "fo/docbook.xsl" ) );
+        // asciidoc compilation with docbook transformations
+        map.put( EXTENSION_PDF, new AsciidocBackend( BACKEND_DOCBOOK, EXTENSION_XML, EXTENSION_FO, "fo/docbook.xsl" ) );
     }
 
     public static AsciidocBackendSingleton getInstance() {

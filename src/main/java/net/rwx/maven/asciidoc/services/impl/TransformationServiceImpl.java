@@ -40,42 +40,42 @@ import net.rwx.maven.asciidoc.utils.FileUtils;
 public class TransformationServiceImpl extends RootServiceImpl implements TransformationService {
 
     private String pathToXslFiles;
-    
+
     public TransformationServiceImpl() throws IOException {
         ClassLoader loader = this.getClass().getClassLoader();
-        InputStream is = loader.getResourceAsStream( ARCHIVE_NAME );
+        InputStream is = loader.getResourceAsStream(ARCHIVE_NAME);
         pathToXslFiles = FileUtils.getTemporaryDirectory();
-        FileUtils.uncompress( is, pathToXslFiles );
+        FileUtils.uncompress(is, pathToXslFiles);
     }
-    
-    @Override
-    public void execute( String input, String stylesheet, String output, String documentPath ) throws TransformerConfigurationException, TransformerException, FileNotFoundException, IOException {
-        File xmlFile = new File( input );
-        File xsltFile = new File( getXsl(stylesheet) );
-        File resultFile = new File( output );
 
-        Source xmlSource = new StreamSource( xmlFile );
-        Source xsltSource = new StreamSource( xsltFile );
-        Result result = new StreamResult( new BufferedOutputStream( new FileOutputStream( resultFile ) ) );
+    @Override
+    public void execute(String input, String stylesheet, String output, String documentPath) throws TransformerConfigurationException, TransformerException, FileNotFoundException, IOException {
+        File xmlFile = new File(input);
+        File xsltFile = new File(getXsl(stylesheet));
+        File resultFile = new File(output);
+
+        Source xmlSource = new StreamSource(xmlFile);
+        Source xsltSource = new StreamSource(xsltFile);
+        Result result = new StreamResult(new BufferedOutputStream(new FileOutputStream(resultFile)));
 
         TransformerFactory transFact = TransformerFactory.newInstance();
-        Transformer trans = transFact.newTransformer( xsltSource );
-        trans.setParameter( "paper.type", "A4" );
+        Transformer trans = transFact.newTransformer(xsltSource);
+        trans.setParameter("paper.type", "A4");
 
-        String imgDir = new File( documentPath ).getParentFile().getAbsolutePath();
-        trans.setParameter( "img.src.path", imgDir + "/" );
-        trans.transform( xmlSource, result );
+        String imgDir = new File(documentPath).getParentFile().getAbsolutePath();
+        trans.setParameter("img.src.path", imgDir + "/");
+        trans.transform(xmlSource, result);
     }
-    
-    private String getXsl( String name ) {
-        
+
+    private String getXsl(String name) {
+
         StringBuilder builder = new StringBuilder();
-        builder.append( pathToXslFiles );
-        builder.append( File.separator );
-        builder.append( "docbook-xsl" );
-        builder.append( File.separator );
-        builder.append( name );
-        
+        builder.append(pathToXslFiles);
+        builder.append(File.separator);
+        builder.append("docbook-xsl");
+        builder.append(File.separator);
+        builder.append(name);
+
         return builder.toString();
-    }    
+    }
 }

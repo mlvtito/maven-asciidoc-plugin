@@ -23,9 +23,7 @@ import net.rwx.maven.asciidoc.configuration.Document;
 import net.rwx.maven.asciidoc.services.impl.ParentTest;
 import net.rwx.maven.asciidoc.utils.FileUtils;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -34,51 +32,52 @@ import static org.junit.Assert.*;
  * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
  */
 public class AsciidocMojoTest extends ParentTest {
-    
+
     String asciidocFilePath;
     String outputPath;
-    
+
     @Before
     public void setUp() throws Exception {
         String temporaryDirectory = FileUtils.getTemporaryDirectory();
         asciidocFilePath = temporaryDirectory + File.separator + "test.asciidoc";
         outputPath = temporaryDirectory + File.separator + "output";
-        writeFileFromResource( "test.asciidoc", asciidocFilePath );
+        writeFileFromResource("test.asciidoc", asciidocFilePath);
     }
-    
+
     @After
     public void tearDown() {
     }
 
-    private Document getDocument( String path, String title ) {
+    private Document getDocument(String path, String title) {
         Document doc = new Document();
-        doc.setPath( path );
-        doc.setTitle( title );
-        
+        doc.setPath(path);
+        doc.setTitle(title);
+
         return doc;
     }
-    
+
     private List<Document> getDocuments() {
         List<Document> docs = new ArrayList<Document>();
-        docs.add( getDocument( "test.asciidoc", "Simple Asciidoc Article" ));
+        docs.add(getDocument("test.asciidoc", "Simple Asciidoc Article"));
         return docs;
     }
+
     /**
      * Test of execute method, of class AsciidocMojo.
      */
     @Test
     public void testExecute() throws Exception {
         AsciidocMojo mojo = new AsciidocMojo();
-        mojo.setDefaultBackend( "html5" );
-        mojo.setDefaultDocumentType( "article" );
-        mojo.setDefaultOutputPath( outputPath );
-        mojo.setProjectFile( new File(asciidocFilePath) );
-        mojo.setDocuments( getDocuments() );
+        mojo.setDefaultBackend("html5");
+        mojo.setDefaultDocumentType("article");
+        mojo.setDefaultOutputPath(outputPath);
+        mojo.setProjectFile(new File(asciidocFilePath));
+        mojo.setDocuments(getDocuments());
 
         mojo.execute();
-        
-        File outputFile = new File( outputPath + File.separator + "test.html" );
-        assertTrue( outputFile.exists() );
+
+        File outputFile = new File(outputPath + File.separator + "test.html");
+        assertTrue(outputFile.exists());
         // TODO: add assertion on output content
     }
 }

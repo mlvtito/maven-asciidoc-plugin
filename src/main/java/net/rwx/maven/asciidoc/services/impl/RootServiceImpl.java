@@ -25,11 +25,14 @@ import org.apache.maven.plugin.logging.Log;
  */
 public class RootServiceImpl implements RootService {
 
-    protected Log logger;
+    private Log logger;
     
     @Override
     public void setLogger(Log logger) {
         this.logger = logger;
     }
     
+    public Log getLogger() {
+        return logger;
+    }
 }
