@@ -66,7 +66,7 @@ public class AsciidocMojoTest extends ParentTest {
      * Test of execute method, of class AsciidocMojo.
      */
     @Test
-    public void testExecute() throws Exception {
+    public void testExecuteHtml5() throws Exception {
         AsciidocMojo mojo = new AsciidocMojo();
         mojo.setDefaultBackend("html5");
         mojo.setDefaultDocumentType("article");
@@ -78,6 +78,31 @@ public class AsciidocMojoTest extends ParentTest {
 
         File outputFile = new File(outputPath + File.separator + "test.html");
         assertTrue(outputFile.exists());
-        // TODO: add assertion on output content
+        String content = FileUtils.readFileToString(outputFile);
+        assertTrue( content.contains("<html") );
+        assertTrue( content.contains("Simple Asciidoc Article</h2>") );
+    }
+    
+    /**
+     * Test of execute method, of class AsciidocMojo.
+     */
+    @Test
+    public void testExecutePdf() throws Exception {
+        AsciidocMojo mojo = new AsciidocMojo();
+        mojo.setDefaultBackend("pdf");
+        mojo.setDefaultDocumentType("article");
+        mojo.setDefaultOutputPath(outputPath);
+        mojo.setProjectFile(new File(asciidocFilePath));
+        mojo.setDocuments(getDocuments());
+
+        mojo.execute();
+
+        File outputFile = new File(outputPath + File.separator + "test.pdf");
+        assertTrue(outputFile.exists());
+        byte[] content = FileUtils.readFileToByteArray(outputFile);
+        assertEquals('%', content[0]);
+        assertEquals('P', content[1]);
+        assertEquals('D', content[2]);
+        assertEquals('F', content[3]);
     }
 }

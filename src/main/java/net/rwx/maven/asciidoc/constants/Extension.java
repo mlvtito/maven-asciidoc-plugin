@@ -14,12 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.rwx.maven.asciidoc.services;
+
+package net.rwx.maven.asciidoc.constants;
 
 /**
- *
+ * 
  * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
  */
-public interface FopService extends RootService {
-
+public interface Extension {
+    public static final String HTML = ".html";
+    public static final String XML  = ".xml";
+    public static final String PDF  = ".pdf";
+    public static final String FO   = ".fo";
 }

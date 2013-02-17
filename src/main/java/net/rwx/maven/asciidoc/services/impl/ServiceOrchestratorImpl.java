@@ -18,8 +18,8 @@ package net.rwx.maven.asciidoc.services.impl;
 
 import com.google.inject.Inject;
 import net.rwx.maven.asciidoc.configuration.Document;
-import net.rwx.maven.asciidoc.backends.AsciidocBackend;
-import net.rwx.maven.asciidoc.backends.AsciidocBackendSingleton;
+import net.rwx.maven.asciidoc.backends.Backend;
+import net.rwx.maven.asciidoc.backends.BackendService;
 import net.rwx.maven.asciidoc.backends.AsciidocBackendTransformation;
 import net.rwx.maven.asciidoc.services.AsciidocService;
 import net.rwx.maven.asciidoc.services.FopService;
@@ -35,6 +35,9 @@ import org.apache.maven.plugin.logging.Log;
 public class ServiceOrchestratorImpl implements ServiceOrchestrator {
     
     private Log logger;
+    
+    @Inject
+    private BackendService backendService;
     
     @Inject
     private AsciidocService asciidocService;
@@ -57,32 +60,15 @@ public class ServiceOrchestratorImpl implements ServiceOrchestrator {
     private void processDocument( Document document ) throws Exception {
         logger.info( String.format( "Starting Asciidoc compilation for document [%s]", document.getTitle() ) );
         
-        AsciidocBackendSingleton backends = AsciidocBackendSingleton.getInstance();
         String backendName = document.getBackend();
-        AsciidocBackend backend = backends.getBackend( backendName );
+        Backend backend = backendService.getBackend( backendName );
 
-        String path = document.getPath();
-        String output = backend.getOutputFile( path );
-        asciidocService.execute( path, backend.getName(), output );
+        String input = document.getPath();
+        asciidocService.execute( input, document, backend );
+        transformationService.execute( asciidocService.getOuputPath(), document, backend );
+        fopService.execute( transformationService.getOuputPath(), document, backend);
         
-        for ( AsciidocBackendTransformation transformation : backend.getTransformations() ) 
-        {
-            String input = output;
-            String stylesheet = transformation.getXsl();
-            output = transformation.getOutputFile( input );
-
-            transformationService.execute(input, stylesheet, output, document.getPath() );
-        }
-
-        if( document.getBackend().equals( "pdf" ) )
-        {
-            String input = output;
-            output = backend.getOutputFilePDF( input );
-            
-            fopService.execute( input, output );
-        }
-        
-        FileUtils.moveFileToDirectory( output, document.getOutputPath() );
+        FileUtils.moveFileToDirectory( fopService.getOuputPath(), document.getOutputPath() );
     }
     
     @Override

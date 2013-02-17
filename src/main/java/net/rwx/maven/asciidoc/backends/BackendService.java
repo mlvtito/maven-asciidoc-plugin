@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.rwx.maven.asciidoc.services;
+package net.rwx.maven.asciidoc.backends;
 
 /**
  *
  * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
  */
-public interface FopService extends RootService {
-
+public interface BackendService {
+    Backend getBackend( String name );
 }

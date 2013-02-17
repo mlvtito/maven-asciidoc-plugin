@@ -16,6 +16,8 @@
  */
 package net.rwx.maven.asciidoc.services;
 
+import net.rwx.maven.asciidoc.backends.Backend;
+import net.rwx.maven.asciidoc.configuration.Document;
 import org.apache.maven.plugin.logging.Log;
 
 /**
@@ -30,4 +32,7 @@ public interface RootService {
      * @param logger 
      */
     void setLogger( Log logger );
+    
+    void execute( String inputPath, Document document, Backend backend ) throws Exception;
+    String getOuputPath();
 }

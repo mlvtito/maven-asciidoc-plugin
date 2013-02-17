@@ -18,18 +18,17 @@ package net.rwx.maven.asciidoc.services.impl;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import net.rwx.maven.asciidoc.backends.Backend;
+import net.rwx.maven.asciidoc.configuration.Document;
 import net.rwx.maven.asciidoc.services.TransformationService;
 import net.rwx.maven.asciidoc.utils.FileUtils;
 
@@ -49,22 +48,26 @@ public class TransformationServiceImpl extends RootServiceImpl implements Transf
     }
 
     @Override
-    public void execute(String input, String stylesheet, String output, String documentPath) throws TransformerConfigurationException, TransformerException, FileNotFoundException, IOException {
-        File xmlFile = new File(input);
-        File xsltFile = new File(getXsl(stylesheet));
-        File resultFile = new File(output);
+    public void execute(String inputPath, Document document, Backend backend) throws Exception {
+        setOuputPath(inputPath, backend);
+        if( backend.isIsTransformation()) {
+            File xmlFile = new File(inputPath);
+            File xsltFile = new File(getXsl(backend.getTransformationStylesheet()));
+            File resultFile = new File(getOuputPath());
 
-        Source xmlSource = new StreamSource(xmlFile);
-        Source xsltSource = new StreamSource(xsltFile);
-        Result result = new StreamResult(new BufferedOutputStream(new FileOutputStream(resultFile)));
+            Source xmlSource = new StreamSource(xmlFile);
+            Source xsltSource = new StreamSource(xsltFile);
+            Result result = new StreamResult(new BufferedOutputStream(new FileOutputStream(resultFile)));
 
-        TransformerFactory transFact = TransformerFactory.newInstance();
-        Transformer trans = transFact.newTransformer(xsltSource);
-        trans.setParameter("paper.type", "A4");
+            TransformerFactory transFact = TransformerFactory.newInstance();
+            Transformer trans = transFact.newTransformer(xsltSource);
+            trans.setParameter("paper.type", "A4");
 
-        String imgDir = new File(documentPath).getParentFile().getAbsolutePath();
-        trans.setParameter("img.src.path", imgDir + "/");
-        trans.transform(xmlSource, result);
+            // TODO: will be used with images management - does not work yet
+            /*String imgDir = new File(documentPath).getParentFile().getAbsolutePath();
+            trans.setParameter("img.src.path", imgDir + "/");*/
+            trans.transform(xmlSource, result);
+        }
     }
 
     private String getXsl(String name) {
@@ -77,5 +80,14 @@ public class TransformationServiceImpl extends RootServiceImpl implements Transf
         builder.append(name);
 
         return builder.toString();
+    }
+
+    @Override
+    protected void setOuputPath(String inputPath, Backend backend) {
+        if( backend.isIsTransformation() ) {
+            setOutputPath( inputPath, backend.getTransformationExtension() );
+        }else {
+            setOutputPath(inputPath);
+        }
     }
 }

@@ -16,16 +16,20 @@
  */
 package net.rwx.maven.asciidoc.services.impl;
 
+import net.rwx.maven.asciidoc.backends.Backend;
+import net.rwx.maven.asciidoc.configuration.Document;
 import net.rwx.maven.asciidoc.services.RootService;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.maven.plugin.logging.Log;
 
 /**
  *
  * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
  */
-public class RootServiceImpl implements RootService {
+public abstract class RootServiceImpl implements RootService {
 
     private Log logger;
+    private String outputPath;
     
     @Override
     public void setLogger(Log logger) {
@@ -34,5 +38,24 @@ public class RootServiceImpl implements RootService {
     
     public Log getLogger() {
         return logger;
+    }
+
+    protected abstract void setOuputPath( String inputPath, Backend backend );
+    
+    protected void setOutputPath( String inputPath, String extension ) {
+        StringBuilder builder = new StringBuilder();
+        builder.append( FilenameUtils.removeExtension( inputPath ) );
+        builder.append( extension );
+        
+        setOutputPath( builder.toString() );
+    }
+    
+    protected void setOutputPath( String outputPath ) {
+        this.outputPath = outputPath;
+    }
+
+    @Override
+    public String getOuputPath() {
+        return outputPath;
     }
 }

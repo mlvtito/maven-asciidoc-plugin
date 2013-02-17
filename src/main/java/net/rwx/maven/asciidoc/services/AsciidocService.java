@@ -28,13 +28,4 @@ public interface AsciidocService extends RootService {
     
     /** Asciidoc archive name. */
     static final String ARCHIVE_NAME = "asciidoc-" + VERSION + ".tar.gz";
-    
-    /**
-     * Launch Asciidoc script.
-     * 
-     * @param input Path to Asciidoc document to process
-     * @param backend Determine output format for Asciidoc script
-     * @param output Path to output file (file format should match backend)
-     */
-    void execute( String input, String backend, String output );
 }

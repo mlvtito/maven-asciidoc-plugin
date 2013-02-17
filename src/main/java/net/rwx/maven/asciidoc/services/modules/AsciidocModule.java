@@ -17,6 +17,9 @@
 package net.rwx.maven.asciidoc.services.modules;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Singleton;
+import net.rwx.maven.asciidoc.backends.BackendService;
+import net.rwx.maven.asciidoc.backends.impl.BackendServiceImpl;
 import net.rwx.maven.asciidoc.services.AsciidocService;
 import net.rwx.maven.asciidoc.services.FopService;
 import net.rwx.maven.asciidoc.services.ServiceOrchestrator;
@@ -35,10 +38,11 @@ public class AsciidocModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(ServiceOrchestrator.class).to(ServiceOrchestratorImpl.class);
-        bind(AsciidocService.class).to(AsciidocServiceImpl.class);
-        bind(TransformationService.class).to(TransformationServiceImpl.class);
-        bind(FopService.class).to(FopServiceImpl.class);
+        bind(ServiceOrchestrator.class).to(ServiceOrchestratorImpl.class).in(Singleton.class);
+        bind(AsciidocService.class).to(AsciidocServiceImpl.class).in(Singleton.class);
+        bind(TransformationService.class).to(TransformationServiceImpl.class).in(Singleton.class);
+        bind(FopService.class).to(FopServiceImpl.class).in(Singleton.class);
+        bind(BackendService.class).to(BackendServiceImpl.class).in(Singleton.class);
     }
     
 }

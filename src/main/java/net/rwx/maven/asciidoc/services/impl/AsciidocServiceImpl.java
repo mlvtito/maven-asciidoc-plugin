@@ -19,6 +19,8 @@ package net.rwx.maven.asciidoc.services.impl;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import net.rwx.maven.asciidoc.backends.Backend;
+import net.rwx.maven.asciidoc.configuration.Document;
 import net.rwx.maven.asciidoc.services.AsciidocService;
 import net.rwx.maven.asciidoc.utils.FileUtils;
 import org.python.core.PyString;
@@ -45,9 +47,9 @@ public class AsciidocServiceImpl extends RootServiceImpl implements AsciidocServ
      * @param output Path to output file (file format should match backend)
      */
     @Override
-    public void execute( String input, String backend, String output ) {
-
-        PySystemState state = getPySystemState( input, backend, output );
+    public void execute( String inputPath, Document document, Backend backend ) throws Exception {
+        setOuputPath(inputPath, backend);
+        PySystemState state = getPySystemState( inputPath, backend.getName(), getOuputPath() );
 
         PythonInterpreter interp = new PythonInterpreter( null, state );
         interp.set( "__file__", asciidocProgramPath );
@@ -93,5 +95,10 @@ public class AsciidocServiceImpl extends RootServiceImpl implements AsciidocServ
         builder.append( "asciidoc.py" );
         
         asciidocProgramPath = builder.toString();
+    }
+
+    @Override
+    protected void setOuputPath(String inputPath, Backend backend) {
+        setOutputPath(inputPath, backend.getAsciidocExtension());
     }
 }
