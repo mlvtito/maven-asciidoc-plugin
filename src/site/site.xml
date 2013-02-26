@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Maven Asciidoc Plugin">
 
+    <skin>
+        <groupId>net.rwx</groupId>
+        <artifactId>maven-rwx-skin</artifactId>
+        <version>0.2-SNAPSHOT</version>
+    </skin>
+    
     <body>
-
-
         <menu name="Asciidoc Plugin">
             <item name="Overview" href="introduction.html">
                 <item name="Introduction" href="introduction.html"/>
