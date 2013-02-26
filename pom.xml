@@ -193,9 +193,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.0</version>
-                <!-- configuration>
-                    <targetJdk>1.6</targetJdk>
-                </configuration -->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
