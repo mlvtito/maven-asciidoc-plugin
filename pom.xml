@@ -87,6 +87,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <netbeans.hint.license>gpl30</netbeans.hint.license>
     </properties>
     
+    <repositories>
+        <repository>
+            <url>http://maven.r-w-x.net/releases</url>
+            <id>rwx</id>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>

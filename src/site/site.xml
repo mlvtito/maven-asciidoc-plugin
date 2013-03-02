@@ -4,7 +4,6 @@
     <skin>
         <groupId>net.rwx</groupId>
         <artifactId>maven-rwx-skin</artifactId>
-        <version>0.2-SNAPSHOT</version>
     </skin>
     
     <body>
