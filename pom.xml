@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses />.
     <groupId>net.rwx.asciidoc</groupId>
     <artifactId>asciidoc-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
     <name>Maven Asciidoc Plugin</name>
     <url>http://asciidoc.r-w-x.net</url>
     
