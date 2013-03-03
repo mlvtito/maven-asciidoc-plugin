@@ -76,8 +76,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </distributionManagement>
     
     <scm>
-        <connection>scm:git:ssh://glsadm@backend.r-w-x.net/home/glsadm/applications/git/asciidoc-plugin.git</connection>
-        <url>git:ssh://glsadm@backend.r-w-x.net/home/glsadm/applications/git/asciidoc-plugin.git</url>
+        <connection>scm:git:ssh://backend.r-w-x.net/home/glsadm/applications/git/asciidoc-plugin.git</connection>
+        <url>http://backend.r-w-x.net/issue/projects/maven-asciidoc-plugin/repository</url>
     </scm>
     
     <properties>
@@ -85,6 +85,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <compiler-plugin-version>2.3.2</compiler-plugin-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
+        <project.scm.id>rwx.repositories</project.scm.id>
     </properties>
     
     <repositories>
