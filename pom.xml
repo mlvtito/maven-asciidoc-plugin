@@ -71,7 +71,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses />.
         </snapshotRepository>
         <site>
             <id>rwx.site</id>
-            <url>scp://ftp.r-w-x.net/homez.32/rwxywdhy/asciidoc/maven</url>
+            <url>scp://ftp.r-w-x.net/homez.32/rwxywdhy/asciidoc</url>
         </site>
     </distributionManagement>
     
