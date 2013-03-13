@@ -24,7 +24,7 @@ package net.rwx.maven.asciidoc.services;
 public interface AsciidocService extends RootService {
     
     /** Asciidoc version in use by the plugin. */
-    static final String VERSION = "8.6.7";
+    static final String VERSION = "8.6.8";
     
     /** Asciidoc archive name. */
     static final String ARCHIVE_NAME = "asciidoc-" + VERSION + ".tar.gz";
