@@ -85,15 +85,7 @@ public class TransformationServiceImpl extends RootServiceImpl implements Transf
     }
 
     private String getXsl(String name) {
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(pathToXslFiles);
-        builder.append(File.separator);
-        builder.append("docbook-xsl");
-        builder.append(File.separator);
-        builder.append(name);
-
-        return builder.toString();
+        return FileUtils.getPath(pathToXslFiles, "docbook-xsl", name);
     }
 
     @Override

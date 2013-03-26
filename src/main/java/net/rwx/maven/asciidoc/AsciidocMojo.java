@@ -23,32 +23,36 @@ import java.io.File;
 import java.util.List;
 import net.rwx.maven.asciidoc.services.ServiceOrchestrator;
 import net.rwx.maven.asciidoc.services.modules.AsciidocModule;
+import net.rwx.maven.asciidoc.utils.FileUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * Goal to compile Asciidoc documents.
- * 
+ *
  * @author Arnaud Fonce <arnaud.fonce@r-w-x.net>
- * 
+ *
  * @goal asciidoc
  */
 public class AsciidocMojo extends AbstractMojo {
 
     /**
      * Default document type which apply on each document.
+     *
      * @parameter default-value="article"
      * @since 0.1
      */
     private String defaultDocumentType;
     /**
      * Default target path for generated documents.
+     *
      * @parameter default-value="${project.build.directory}/asciidoc"
      * @since 0.1
      */
     private String defaultOutputPath;
     /**
      * Default backend which apply on each document.
+     *
      * @parameter default-value="html5"
      * @since 0.1
      */
@@ -58,52 +62,52 @@ public class AsciidocMojo extends AbstractMojo {
      * @readonly
      */
     private File projectFile;
-    
     /**
      * The documents list to generate.
+     *
      * @parameter
      * @since 0.1
      */
     private List<Document> documents;
-    
+
     @Override
     public void execute() throws MojoExecutionException {
 
-        getLog().info( "Starting asciidoc compilation" );
-        getLog().info( "Default document type : " + defaultDocumentType );
-        getLog().info( "Default output path : " + defaultOutputPath );
-        getLog().info( "Default backend : " + defaultBackend );
-        
-        if( documents == null ) {
-            getLog().info( "Nothing to be done" );
+        getLog().info("Starting asciidoc compilation");
+        getLog().info("Default document type : " + defaultDocumentType);
+        getLog().info("Default output path : " + defaultOutputPath);
+        getLog().info("Default backend : " + defaultBackend);
+
+        if (documents == null) {
+            getLog().info("Nothing to be done");
             return;
         }
 
         ServiceOrchestrator orchestrator = getServiceOrchestrator();
-        orchestrator.setLogger( getLog() );
-        
-        for ( Document document : documents ) {
-            computeDocument( document );
-            orchestrator.execute( document );
+        orchestrator.setLogger(getLog());
+
+        for (Document document : documents) {
+            computeDocument(document);
+            orchestrator.execute(document);
         }
     }
-    
-    private String determineValue( String inputValue, String defaultValue ) {
-        return (inputValue == null)?defaultValue:inputValue;
+
+    private String determineValue(String inputValue, String defaultValue) {
+        return (inputValue == null) ? defaultValue : inputValue;
     }
-    
-    private void computeDocument( Document document ) {
-        document.setBackend( determineValue( document.getBackend(), defaultBackend) );
-        document.setDocumentType( determineValue( document.getDocumentType(), defaultDocumentType ) );
-        document.setOutputPath( determineValue( document.getOutputPath(), defaultOutputPath ) );
-        
-        String realPath = projectFile.getParent() + File.separator + document.getPath();
-        document.setPath( realPath );
+
+    private void computeDocument(Document document) {
+        document.setBackend(determineValue(document.getBackend(), defaultBackend));
+        document.setDocumentType(determineValue(document.getDocumentType(), defaultDocumentType));
+        document.setOutputPath(determineValue(document.getOutputPath(), defaultOutputPath));
+
+        String realPath = FileUtils.getPath(projectFile.getParent(), document.getPath());
+        document.setPath(realPath);
     }
-    
+
     private ServiceOrchestrator getServiceOrchestrator() throws MojoExecutionException {
-        Injector injector = Guice.createInjector( new AsciidocModule() );
-        return injector.getInstance( ServiceOrchestrator.class );
+        Injector injector = Guice.createInjector(new AsciidocModule());
+        return injector.getInstance(ServiceOrchestrator.class);
     }
 
     public String getDefaultDocumentType() {
@@ -145,6 +149,4 @@ public class AsciidocMojo extends AbstractMojo {
     public void setDocuments(List<Document> documents) {
         this.documents = documents;
     }
-    
-    
 }

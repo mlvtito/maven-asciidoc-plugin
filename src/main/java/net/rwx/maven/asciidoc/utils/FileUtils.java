@@ -28,61 +28,61 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 public class FileUtils extends org.apache.commons.io.FileUtils {
 
     private static File temporaryDirectory;
-    
-    public static String getAsciidocTemporaryPath( String filename, String extension ) throws IOException {
-    
-        File file = new File( filename );
-        
+
+    public static String getAsciidocTemporaryPath(String filename, String extension) throws IOException {
+
+        File file = new File(filename);
+
         StringBuilder builder = new StringBuilder();
-        
-        builder.append( getTemporayAsciidoc() );
-        builder.append( File.separator );
-        builder.append( file.getName() );
-        builder.append( extension );
-        
+
+        builder.append(getTemporayAsciidoc());
+        builder.append(File.separator);
+        builder.append(file.getName());
+        builder.append(extension);
+
         return builder.toString();
     }
-    
-    public static void moveFileToDirectory( String fileName, String directoryName ) throws IOException {
-        
-        File file = new File( fileName );
-        File directory = new File( directoryName );
-        
-        File destFile = FileUtils.getFile( directory, file.getName() );
-        if ( destFile.exists() ) {
-            forceDelete( destFile );
+
+    public static void moveFileToDirectory(String fileName, String directoryName) throws IOException {
+
+        File file = new File(fileName);
+        File directory = new File(directoryName);
+
+        File destFile = FileUtils.getFile(directory, file.getName());
+        if (destFile.exists()) {
+            forceDelete(destFile);
         }
-        
-        moveFileToDirectory( file, directory, true );
+
+        moveFileToDirectory(file, directory, true);
     }
-    
+
     public static String getTemporaryDirectory() throws IOException {
         StringBuilder builder = new StringBuilder();
-        
-        builder.append( getTempDirectoryPath() );
-        builder.append( File.separator );
-        builder.append( "asciidoc-maven-plugin" );
-        builder.append( Long.toString(System.nanoTime()) );
-        
-        File directory = new File( builder.toString() );
-        forceMkdir( directory );
+
+        builder.append(getTempDirectoryPath());
+        builder.append(File.separator);
+        builder.append("asciidoc-maven-plugin");
+        builder.append(Long.toString(System.nanoTime()));
+
+        File directory = new File(builder.toString());
+        forceMkdir(directory);
         // forceDeleteOnExit( directory );
-        
+
         return directory.getAbsolutePath();
     }
-    public static String getTemporayAsciidoc( ) throws IOException {
 
-        if( temporaryDirectory == null )
-        {
+    private static String getTemporayAsciidoc() throws IOException {
+
+        if (temporaryDirectory == null) {
             StringBuilder builder = new StringBuilder();
-        
-            builder.append( getTempDirectoryPath() );
-            builder.append( File.separator );
-            builder.append( "asciidoc-maven-plugin" );
-            builder.append( Long.toString(System.nanoTime()) );
-            temporaryDirectory = new File( builder.toString() );
-            forceMkdir( temporaryDirectory );
-            forceDeleteOnExit( temporaryDirectory );
+
+            builder.append(getTempDirectoryPath());
+            builder.append(File.separator);
+            builder.append("asciidoc-maven-plugin");
+            builder.append(Long.toString(System.nanoTime()));
+            temporaryDirectory = new File(builder.toString());
+            forceMkdir(temporaryDirectory);
+            forceDeleteOnExit(temporaryDirectory);
         }
         // File f = File.createTempFile("tempAsciidoc", Long.toString(System.nanoTime()));
         // forceMkdir( f );
@@ -90,35 +90,47 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         return temporaryDirectory.getAbsolutePath();
 
     }
-    
-    public static String uncompress( InputStream is, String destination ) throws IOException {
-        
-        BufferedInputStream in = new BufferedInputStream( is );
+
+    public static String uncompress(InputStream is, String destination) throws IOException {
+
+        BufferedInputStream in = new BufferedInputStream(is);
         GzipCompressorInputStream gzIn = new GzipCompressorInputStream(in);
-        TarArchiveInputStream tarInput = new TarArchiveInputStream( gzIn );
-        
+        TarArchiveInputStream tarInput = new TarArchiveInputStream(gzIn);
+
         TarArchiveEntry entry = tarInput.getNextTarEntry();
         do {
-            File f = new File( destination + "/" + entry.getName() );
-            FileUtils.forceMkdir( f.getParentFile() );
-            
-            if( ! f.isDirectory() ) {
-                OutputStream os = new FileOutputStream( f );
-                byte[] content = new byte[ (int)entry.getSize() ];
+            File f = new File(destination + "/" + entry.getName());
+            FileUtils.forceMkdir(f.getParentFile());
+
+            if (!f.isDirectory()) {
+                OutputStream os = new FileOutputStream(f);
+                byte[] content = new byte[(int) entry.getSize()];
                 int byteRead = 0;
-                while( byteRead < entry.getSize() ) {
+                while (byteRead < entry.getSize()) {
                     byteRead += tarInput.read(content, byteRead, content.length - byteRead);
-                    os.write( content, 0, byteRead );
+                    os.write(content, 0, byteRead);
                 }
 
                 os.close();
-                forceDeleteOnExit( f );
+                forceDeleteOnExit(f);
             }
             entry = tarInput.getNextTarEntry();
-        }while( entry != null );
+        } while (entry != null);
 
         gzIn.close();
-        
+
         return destination;
+    }
+
+    public static String getPath(String... files) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(files[0]);
+        for (int i = 1; i < files.length; i++) {
+            builder.append(File.separator);
+            builder.append(files[i]);
+        }
+
+        return builder.toString();
     }
 }
