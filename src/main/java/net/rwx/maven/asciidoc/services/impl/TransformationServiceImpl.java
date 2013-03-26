@@ -50,24 +50,38 @@ public class TransformationServiceImpl extends RootServiceImpl implements Transf
     @Override
     public void execute(String inputPath, Document document, Backend backend) throws Exception {
         setOuputPath(inputPath, backend);
-        if( backend.isIsTransformation()) {
-            File xmlFile = new File(inputPath);
-            File xsltFile = new File(getXsl(backend.getTransformationStylesheet()));
-            File resultFile = new File(getOuputPath());
+        if (backend.isIsTransformation()) {
 
-            Source xmlSource = new StreamSource(xmlFile);
-            Source xsltSource = new StreamSource(xsltFile);
-            Result result = new StreamResult(new BufferedOutputStream(new FileOutputStream(resultFile)));
+            Source xmlSource = getSource(inputPath);
 
-            TransformerFactory transFact = TransformerFactory.newInstance();
-            Transformer trans = transFact.newTransformer(xsltSource);
-            trans.setParameter("paper.type", "A4");
+            String xslFilePath = getXsl(backend.getTransformationStylesheet());
+            Source xslSource = getSource(xslFilePath);
 
-            // TODO: will be used with images management - does not work yet
-            /*String imgDir = new File(documentPath).getParentFile().getAbsolutePath();
-            trans.setParameter("img.src.path", imgDir + "/");*/
-            trans.transform(xmlSource, result);
+            Result result = getResult(getOuputPath());
+            transform(xmlSource, xslSource, result);
         }
+    }
+
+    private Source getSource(String fileName) {
+        File file = new File(fileName);
+        return new StreamSource(file);
+    }
+
+    private Result getResult(String fileName) throws Exception {
+        FileOutputStream fos = new FileOutputStream(fileName);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        return new StreamResult(bos);
+    }
+
+    private void transform(Source xml, Source xsl, Result result) throws Exception {
+        TransformerFactory transFact = TransformerFactory.newInstance();
+        Transformer trans = transFact.newTransformer(xsl);
+        trans.setParameter("paper.type", "A4");
+
+        // TODO: will be used with images management - does not work yet
+            /*String imgDir = new File(documentPath).getParentFile().getAbsolutePath();
+         trans.setParameter("img.src.path", imgDir + "/");*/
+        trans.transform(xml, result);
     }
 
     private String getXsl(String name) {
@@ -84,9 +98,9 @@ public class TransformationServiceImpl extends RootServiceImpl implements Transf
 
     @Override
     protected void setOuputPath(String inputPath, Backend backend) {
-        if( backend.isIsTransformation() ) {
-            setOutputPath( inputPath, backend.getTransformationExtension() );
-        }else {
+        if (backend.isIsTransformation()) {
+            setOutputPath(inputPath, backend.getTransformationExtension());
+        } else {
             setOutputPath(inputPath);
         }
     }

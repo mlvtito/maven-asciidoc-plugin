@@ -20,7 +20,6 @@ import com.google.inject.Inject;
 import net.rwx.maven.asciidoc.configuration.Document;
 import net.rwx.maven.asciidoc.backends.Backend;
 import net.rwx.maven.asciidoc.backends.BackendService;
-import net.rwx.maven.asciidoc.backends.AsciidocBackendTransformation;
 import net.rwx.maven.asciidoc.services.AsciidocService;
 import net.rwx.maven.asciidoc.services.FopService;
 import net.rwx.maven.asciidoc.services.ServiceOrchestrator;
