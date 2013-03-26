@@ -17,7 +17,6 @@
 package net.rwx.maven.asciidoc.services.impl;
 
 import net.rwx.maven.asciidoc.backends.Backend;
-import net.rwx.maven.asciidoc.configuration.Document;
 import net.rwx.maven.asciidoc.services.RootService;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.maven.plugin.logging.Log;
